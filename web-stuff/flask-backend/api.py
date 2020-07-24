@@ -21,7 +21,7 @@ lock = threading.Lock()
 app = Flask(__name__)
 
 # intialize video stream
-vs = VideoStream(0).start()
+vs = VideoStream(0, False, resolution=(1280,480)).start()
 time.sleep(2.0)
 
 @app.route('/')
@@ -45,7 +45,7 @@ def detect_motion(frameCount):
     while True:
         frame = vs.read()
         # frame = imutils.resize(frame, width=400)
-        frame = frame[0:0, 1280:960]
+        frame = frame[0:0, 960:480]
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray, (7, 7), 0)
 
