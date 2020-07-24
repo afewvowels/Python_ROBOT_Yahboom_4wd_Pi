@@ -54,7 +54,7 @@ def detect_motion(frameCount):
     while True:
         frame = vs.read()
         # frame = imutils.resize(frame, width=1280)
-        frame = frame[0:1280, 0:960]
+        frame = frame[0:960, 0:1280]
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray, (7, 7), 0)
 
