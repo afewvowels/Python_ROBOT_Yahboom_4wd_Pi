@@ -22,7 +22,7 @@ app = Flask(__name__)
 
 # intialize video stream
 # vs = VideoStream(src=0, usePiCam=False, resolution=(1280, 480)).start()
-vs = cv2.VideoStream(0)
+vs = cv2.VideoCapture(0)
 time.sleep(2.0)
 
 @app.route('/')
