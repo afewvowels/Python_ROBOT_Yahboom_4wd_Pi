@@ -10,6 +10,7 @@ import argparse
 import datetime
 import imutils
 import cv2
+from PIL import Image
 
 # initialize output frame & thread lock for
 # multiple browser views
@@ -20,7 +21,7 @@ lock = threading.Lock()
 app = Flask(__name__)
 
 # intialize video stream
-vs = VideoStream(src=0).start()
+vs = VideoStream(0).start()
 time.sleep(2.0)
 
 @app.route('/')
@@ -83,7 +84,9 @@ def generate():
         
 @app.route('/cam1')
 def cam1():
-    return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    imgArray = generate()
+    image = Image.fromarray(imgArray, 'RGB')
+    return Response(image, mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
