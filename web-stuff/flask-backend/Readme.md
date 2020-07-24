@@ -1,3 +1,3 @@
 Make sure to have the right packages installed!
 
-`pip3 install flask python-dotenv`
+`pip3 install flask python-dotenv numpy opencv-contrib-python imutils`
