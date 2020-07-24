@@ -3,7 +3,7 @@ from pyimagesearch.motion_detection.singlemotiondetector import SingleMotionDete
 from flask import Flask
 from flask import Response
 from flask import render_template
-from imutils.video import VideoStream
+# from imutils.video import VideoStream
 import RPi.GPIO as GPIO
 import threading
 import argparse
@@ -21,7 +21,8 @@ lock = threading.Lock()
 app = Flask(__name__)
 
 # intialize video stream
-vs = VideoStream(0, False, resolution=(1280,480)).start()
+# vs = VideoStream(src=0, usePiCam=False, resolution=(1280, 480)).start()
+vs = cv2.VideoStream(0)
 time.sleep(2.0)
 
 @app.route('/')
@@ -44,8 +45,7 @@ def detect_motion(frameCount):
 
     while True:
         frame = vs.read()
-        # frame = imutils.resize(frame, width=400)
-        frame = frame[0:0, 960:480]
+        frame = imutils.resize(frame, width=1280)
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray, (7, 7), 0)
 
@@ -100,4 +100,5 @@ if __name__ == '__main__':
 
     app.run(host=args['ip'], port=args['port'], debug=True, threaded=True, use_reloader=False)
 
-vs.stop()
+# vs.stop()
+vs.release()
