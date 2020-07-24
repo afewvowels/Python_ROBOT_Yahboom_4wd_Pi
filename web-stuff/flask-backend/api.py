@@ -83,7 +83,7 @@ def generate():
         
 @app.route('/cam1')
 def cam1():
-    return Response(generate(), mimetype='multipart/x-mixed/replace; boundary=frame')
+    return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
