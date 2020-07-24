@@ -23,7 +23,7 @@ app = Flask(__name__)
 vs = VideoStream(src=0).start()
 time.sleep(2.0)
 
-@app.route('/test')
+@app.route('/')
 def test_index():
     return render_template('index.html')
 
