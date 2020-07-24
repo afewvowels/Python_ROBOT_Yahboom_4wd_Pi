@@ -1,14 +1,21 @@
+# Camera resolutions:
+# 2560x960
+# 2560x720
+# 1280x480
+# 640x240
+
+
 import time
 from pyimagesearch.motion_detection.singlemotiondetector import SingleMotionDetector
 from flask import Flask
 from flask import Response
 from flask import render_template
 # from imutils.video import VideoStream
-import RPi.GPIO as GPIO
+# import RPi.GPIO as GPIO
 import threading
 import argparse
 import datetime
-import imutils
+# import imutils
 import cv2
 
 # initialize output frame & thread lock for
@@ -22,6 +29,8 @@ app = Flask(__name__)
 # intialize video stream
 # vs = VideoStream(src=0, usePiCam=False, resolution=(1280, 480)).start()
 vs = cv2.VideoCapture(0)
+vs.set(cv2.CAP_PROP_FRAME_WIDTH, 2560)
+vs.set(cv2.CAP_PROP_FRAME_HEIGHT, 960)
 time.sleep(2.0)
 
 @app.route('/')
@@ -45,6 +54,7 @@ def detect_motion(frameCount):
     while True:
         frame = vs.read()
         # frame = imutils.resize(frame, width=1280)
+        frame = frame[0:0, 1280:960]
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray, (7, 7), 0)
 
