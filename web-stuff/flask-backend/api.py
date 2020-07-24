@@ -10,7 +10,6 @@ import argparse
 import datetime
 import imutils
 import cv2
-from PIL import Image
 
 # initialize output frame & thread lock for
 # multiple browser views
