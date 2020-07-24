@@ -61,11 +61,11 @@ def detect_motion(frameCount):
                 (thresh, (minX, minY, maxX, maxY)) = motion
                 cv2.rectangle(frame, (minX, minY), (maxX, maxY), (0, 0, 255), 2)
             
-            md.update(gray)
-            total += 1
+        md.update(gray)
+        total += 1
 
-            with lock:
-                outputFrame = frame.copy()
+        with lock:
+            outputFrame = frame.copy()
 
 def generate():
     global outputFrame, lock
@@ -84,9 +84,7 @@ def generate():
         
 @app.route('/cam1')
 def cam1():
-    imgArray = generate()
-    image = Image.fromarray(imgArray, 'RGB')
-    return Response(image, mimetype='multipart/x-mixed-replace; boundary=frame')
+    return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
