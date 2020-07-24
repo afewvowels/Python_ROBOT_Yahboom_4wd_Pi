@@ -54,14 +54,14 @@ def detect_motion(frameCount):
     while True:
         frame = vs.read()
         # frame = imutils.resize(frame, width=1280)
-        frame = frame[0:960, 0:1280]
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        cropped = frame[0:960, 0:1280]
+        gray = cv2.cvtColor(cropped, cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray, (7, 7), 0)
 
         timestamp = datetime.datetime.now()
         cv2.putText(frame, timestamp.strftime(
             '%A %d %B %Y %I:%M:%S%p'),
-            (10, frame.shape[0] - 10),
+            (10, cropped.shape[0] - 10),
             cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
 
         if total > frameCount:
@@ -75,7 +75,7 @@ def detect_motion(frameCount):
         total += 1
 
         with lock:
-            outputFrame = frame.copy()
+            outputFrame = cropped.copy()
 
 def generate():
     global outputFrame, lock
