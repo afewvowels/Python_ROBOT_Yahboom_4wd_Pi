@@ -52,7 +52,7 @@ lMotor.stop()
 rMotor = gpiozero.Motor(37, 35, 33)
 rMotor.stop()
 
-def setSpeed(fast)
+def setSpeed(fast):
     if fast:
         speed = 0.66
     else:
