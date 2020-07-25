@@ -338,9 +338,10 @@ def rotate_c():
 
 @app.route('/save', methods=['GET'])
 def save():
-    name = 'stero' + str(time.time()) + '.png'
+    global outputFrame
+    name = 'stereo' + str(time.time()) + '.png'
     cv2.imwrite(name, outputFrame)
-    return json.dumps(returnJSONFormat(name))
+    return Response(str('image saved as: ' + name))
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()

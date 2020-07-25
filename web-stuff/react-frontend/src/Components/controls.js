@@ -173,7 +173,12 @@ export default function Controls() {
                 method: 'POST'
             }).then(response => response.text());
         }
+    }
 
+    const saveImage = value => () => {
+        fetch('/save', {
+            method: 'GET'
+        }).then(response => response.text());
     }
 
     return(
@@ -235,7 +240,7 @@ export default function Controls() {
                         <button onClick={setServo('us')}>US</button>
                     </span>
                 </div>
-                <button onClick={button('/save')}>Save Image</button>
+                <button onClick={saveImage('')}>Save Image</button>
             </Buttons>
         </MainWrapper>
     );
