@@ -343,7 +343,7 @@ def save():
     print(name)
     print(os.getcwd())
     (flag, png) = cv2.imencode('.png', outputFrame)
-    cv2.imwrite(name, png)
+    cv2.imwrite(name, png, [cv2.IMWRITE_PNG_COMPRESSION, 0])
     return Response(str('image saved as: ' + os.getcwd() + name))
 
 if __name__ == '__main__':
