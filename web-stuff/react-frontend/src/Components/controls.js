@@ -12,21 +12,12 @@ export default function Controls() {
     const feed = document.getElementById('status-feed')
 
     const button = (props) => {
+        var msgHTML = document.createElement('span');
         fetch(props)
             .then(res => res.json())
             .then(data => {
-                constructMessage(data.msg, data.good);
+                msgHTML.innerHTML = data.msg
             });
-    }
-
-    const constructMessage = (props) => {
-        var msgHTML = document.createElement('span');
-        msgHTML.innerHTML = props.data[0];
-        if (props.data[1]) {
-            msgHTML.style.color = 'green';
-        } else {
-            msgHTML.style.color = 'red';
-        }
         document.getElementById('status-feed').appendChild(msgHTML);
     }
 
