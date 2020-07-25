@@ -10,6 +10,7 @@ from pyimagesearch.motion_detection.singlemotiondetector import SingleMotionDete
 from flask import Flask
 from flask import Response
 from flask import render_template
+from flask import request
 # from imutils.video import VideoStream
 # import RPi.GPIO as GPIO
 import threading
@@ -20,7 +21,6 @@ import json
 import cv2
 import gpiozero
 from gpiozero.pins.native import NativeFactory
-import requests
 import signal
 
 # initialize output frame & thread lock for
