@@ -249,7 +249,7 @@ def led_set():
 
     led_values(r, g, b)
 
-    return Response(str('led set successful, set to state: ' + state + ' r: ' + str(r) + ' g: ' + str(g) + ' b: ' + str(b)))
+    return Response(str('led set successful, r: ' + str(r) + ' g: ' + str(g) + ' b: ' + str(b)))
 
 @app.route('/move', methods=['POST'])
 def move():
