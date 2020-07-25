@@ -235,6 +235,7 @@ export default function Controls() {
                         <button onClick={setServo('us')}>US</button>
                     </span>
                 </div>
+                <button onClick={button('/save')}>Save Image</button>
             </Buttons>
         </MainWrapper>
     );
