@@ -9,7 +9,11 @@ const MainWrapper = styled.main`
 `;
 
 export default function Controls() {
-    // const [videoStream, setVideoStream] = useState(0);
+    const [videoStream, setVideoStream] = useState(0);
+
+    fetch('/cam1').then(image => {
+        setVideoStream
+    })
 
     return(
         <MainWrapper>
