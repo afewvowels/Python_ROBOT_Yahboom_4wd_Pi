@@ -70,6 +70,32 @@ def led_values(r, g, b):
     else:
         GPIO.output(LED_B, GPIO.LOW)
 
+# initialize servos
+SERVO_ULTRASONIC = 23
+SERVO_CAMERA = 11
+
+GPIO.setup(SERVO_ULTRASONIC, GPIO.OUT)
+GPIO.setup(SERVO_CAMERA, GPIO.OUT)
+
+sUltrasonic = GPIO.PWM(SERVO_ULTRASONIC, 50)
+sCamera = GPIO.PWM(SERVO_CAMERA, 50)
+
+def moveUSServo(angle):
+    freq = angle / 18 + 2
+    GPIO.output(SERVO_ULTRASONIC, True)
+    sUltrasonic.ChangeDutyCycle(freq)
+    sleep(1)
+    GPIO.output(SERVO_ULTRASONIC, False)
+    sUltrasonic.ChangeDutyCycle(0)
+
+def moveCServo(angle):
+    freq = angle / 18 + 2
+    GPIO.output(SERVO_CAMERA, True)
+    sCamera.ChangeDutyCycle(freq)
+    sleep(1)
+    GPIO.output(SERVO_CAMERA, False)
+    sCamera.ChangeDutyCycle(0)
+
 # initialize motors && motor functions
 speed = 0.0
 
@@ -287,6 +313,16 @@ def move():
         print('back move term provided')
 
     return Response('move successful')
+
+@app.route('/rotate_us', methods=['POST'])
+def rotate_us():
+    moveUSServo(float(request.args['angle']))
+    return Response('moved ultrasonic')
+
+@app.route('/rotate_c', methods=['POST'])
+def rotate_c():
+    moveCServo(float(request.args['angle']))
+    return Response('moved camera')
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()

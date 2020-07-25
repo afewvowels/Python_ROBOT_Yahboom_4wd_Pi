@@ -153,6 +153,29 @@ export default function Controls() {
         }).then(response => response.text());
     }
 
+    const setServo = value => () => {
+        var angle = 0;
+        var data = new URLSearchParams();
+
+        if (value == 'camera') {
+            angle = document.getElementById('camera').value;
+        } else {
+            angle = document.getElementById('us').value;
+        }
+        data.append('angle', angle);
+
+        if (value == 'camera'){
+            fetch('/rotate_c?' + data.toString(), {
+                method: 'POST'
+            }).then(response => response.text());
+        } else {
+            fetch('/rotate_us?' + data.toString(), {
+                method: 'POST'
+            }).then(response => response.text());
+        }
+
+    }
+
     return(
         <MainWrapper id='main-wrapper'>
             <Heading>Controls</Heading>
@@ -198,6 +221,19 @@ export default function Controls() {
                         <input type='checkbox' id='blue' name='blue' />
                     </span>
                     <button onClick={ledState()}>Submit</button>
+                </div>
+                <div>
+                    <h3>Servo Controls</h3>
+                    <span>
+                        <label for='camera'>Camera:</label>
+                        <input type='range' id='camera' name='camera' min='0' max='180' step='1' />
+                        <button onClick={setServo('camera')}>Camera</button>
+                    </span>
+                    <span>
+                        <label for='us'>US:</label>
+                        <input type='range' id='us' name='us' min='0.0' max='180.0' step='1.0' />
+                        <button onClick={setServo('us')}>US</button>
+                    </span>
                 </div>
             </Buttons>
         </MainWrapper>
