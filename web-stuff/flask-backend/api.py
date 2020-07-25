@@ -73,13 +73,13 @@ def led_values(r, g, b):
 # initialize motors && motor functions
 speed = 0.0
 
-lForward = 20
-lBackward = 21
-lPWM = 16
+rForward = 20
+rBackward = 21
+rPWM = 16
 
-rForward = 19
-rBackward = 26
-rPWM = 13
+lForward = 19
+lBackward = 26
+lPWM = 13
 
 GPIO.setup(lPWM,GPIO.OUT,initial=GPIO.HIGH)
 GPIO.setup(lForward,GPIO.OUT,initial=GPIO.LOW)
@@ -87,7 +87,8 @@ GPIO.setup(lBackward,GPIO.OUT,initial=GPIO.LOW)
 GPIO.setup(rPWM,GPIO.OUT,initial=GPIO.HIGH)
 GPIO.setup(rForward,GPIO.OUT,initial=GPIO.LOW)
 GPIO.setup(rBackward,GPIO.OUT,initial=GPIO.LOW)
-#Set the PWM pin and frequency is 2000hz
+
+# Set the PWM pin and frequency is 2000hz
 pwm_LEFT = GPIO.PWM(lPWM, 2000)
 pwm_RIGHT = GPIO.PWM(rPWM, 2000)
 pwm_LEFT.start(0)
