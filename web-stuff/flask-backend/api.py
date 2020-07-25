@@ -215,8 +215,8 @@ def detect_motion(frameCount):
 
     while True:
         ret, frame = vs.read()
-        cropped = frame[0:480, 0:640]
-        gray = cv2.cvtColor(cropped, cv2.COLOR_BGR2GRAY)
+        # cropped = frame[0:480, 0:640]
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray, (7, 7), 0)
 
         timestamp = datetime.datetime.now()
