@@ -21,13 +21,13 @@ export default function Controls() {
 
     const constructMessage = (props) => {
         var msgHTML = document.createElement('span');
-        msgHTML.innerHTML = props[0];
-        if (props[1]) {
+        msgHTML.innerHTML = props.data[0];
+        if (props.data[1]) {
             msgHTML.style.color = 'green';
         } else {
             msgHTML.style.color = 'red';
         }
-        feed.appendChild(msgHTML);
+        document.getElementById('status-feed').appendChild(msgHTML);
     }
 
     return(
@@ -35,8 +35,8 @@ export default function Controls() {
             <p>Controls</p>
             <img src='http://192.168.86.48:5000/cam1' />
             <div id='status-feed'></div>
-            <button onClick={constructMessage('/test_button1')}>Test1</button>
-            <button onClick={constructMessage('/test_button2')}>Test2</button>
+            <button onClick={button('/test_button1')}>Test1</button>
+            <button onClick={button('/test_button2')}>Test2</button>
         </MainWrapper>
     );
 }

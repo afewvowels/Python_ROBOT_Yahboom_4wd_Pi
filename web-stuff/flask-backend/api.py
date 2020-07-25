@@ -96,7 +96,7 @@ def cam1():
     return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 def returnJSONFormat(inString, good=True):
-    return {'msg' : inString, 'good' : good}
+    return dict({'msg' : inString, 'good' : good})
 
 @app.route('/test_button1')
 def test_button1():
