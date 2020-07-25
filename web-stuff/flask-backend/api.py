@@ -17,6 +17,7 @@ import threading
 import argparse
 import datetime
 import json
+import os
 # import imutils
 import cv2
 # import gpiozero
@@ -341,7 +342,7 @@ def save():
     global outputFrame
     name = 'stereo' + str(time.time()) + '.png'
     cv2.imwrite(name, outputFrame)
-    return Response(str('image saved as: ' + name))
+    return Response(str('image saved as: ' + os.getcwd() + name))
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
