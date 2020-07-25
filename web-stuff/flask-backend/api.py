@@ -341,7 +341,7 @@ def rotate_c():
 def save():
     global vs
     name = '/home/pi/Pictures/Webcam/stereo' + str(time.time()) + '.jpg'
-    image = np.array(vs.read())
+    ret, image = vs.read()
     (flag, jpg) = cv2.imencode('.jpg', image)
     cv2.imwrite(name, jpg, [cv2.IMWRITE_JPEG_QUALITY, 95])
     return Response(str('image saved as: ' + name))
