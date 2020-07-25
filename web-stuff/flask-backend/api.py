@@ -43,6 +43,7 @@ time.sleep(2.0)
 
 # initialize pin style for RPi.GPIO
 GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
 
 # initialize leds
 # led = gpiozero.RGBLED(22, 27, 24, active_high=True, initial_value=(0.0, 1.0, 0.0), pwm=False, pin_factory=RPiGPIOFactory())
@@ -339,7 +340,7 @@ def rotate_c():
 def save():
     name = 'stero' + str(time.time()) + '.png'
     cv2.imwrite(name, outputFrame)
-    return Response(str('saved image ' + name))
+    return json.dumps(returnJSONFormat(name))
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
