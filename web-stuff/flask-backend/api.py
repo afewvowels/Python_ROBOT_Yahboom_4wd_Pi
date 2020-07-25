@@ -28,6 +28,7 @@ import signal
 # initialize output frame & thread lock for
 # multiple browser views
 outputFrame = None
+saveFrame = None
 lock = threading.Lock()
 
 # initialize flask app
@@ -211,13 +212,14 @@ def get_clock_time():
     return {'clock_time': time.clock()}
 
 def detect_motion(frameCount):
-    global vs, outputFrame, lock
+    global vs, outputFrame, lock, saveFrame
 
     md = SingleMotionDetector(accumWeight=0.1)
     total = 0
 
     while True:
         ret, frame = vs.read()
+        saveFrame = frame
         cropped = frame[0:480, 0:640]
         gray = cv2.cvtColor(cropped, cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray, (7, 7), 0)
@@ -339,10 +341,9 @@ def rotate_c():
 
 @app.route('/save', methods=['GET'])
 def save():
-    global vs
+    global saveFrame
     name = '/home/pi/Pictures/Webcam/stereo' + str(time.time()) + '.jpg'
-    ret, image = vs.read()
-    (flag, jpg) = cv2.imencode('.jpg', image)
+    (flag, jpg) = cv2.imencode('.jpg', saveFrame)
     cv2.imwrite(name, jpg, [cv2.IMWRITE_JPEG_QUALITY, 95])
     return Response(str('image saved as: ' + name))
 
