@@ -242,8 +242,10 @@ def led_set():
         return Response('led set error occurred')
 
     if state == 'blink':
+        led.on()
         led.blink(1, 1, 0, 0, color)
     elif state == 'on':
+        led.on()
         led.color = color
     else:
         led.off()
