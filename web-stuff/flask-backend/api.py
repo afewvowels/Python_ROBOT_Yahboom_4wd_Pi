@@ -243,12 +243,11 @@ def led_set():
         led.on()
         led.blink(1, 1, 0, 0, color)
     elif state == 'on':
-        led.on()
         led.color = color
     else:
         led.off()
 
-    return Response('led set successful')
+    return Response('led set successful, set to: ' + color)
 
 @app.route('/move', methods=['POST'])
 def move():
