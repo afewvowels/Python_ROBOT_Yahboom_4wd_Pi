@@ -248,6 +248,8 @@ def led_set():
     else:
         led.off()
 
+    return ''
+
 @app.route('/move', methods=['POST'])
 def move():
     try:
@@ -279,6 +281,8 @@ def move():
         moveBackwards(duration, fast)
     else:
         print('back move term provided')
+
+    return ''
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
