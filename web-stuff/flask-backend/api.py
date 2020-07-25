@@ -237,8 +237,7 @@ def led_set():
             b = request.args['led_b']
             state = request.args['led_state']
     except Exception as e:
-        print('led error occurred')
-        return
+        return Response('led set error occurred')
 
     if state == 'blink':
         led.blink(1, 1, 0, 0, color)
@@ -246,6 +245,8 @@ def led_set():
         led.color = color
     else:
         led.off()
+
+    return Response('led set successful')
 
 @app.route('/move', methods=['POST'])
 def move():
@@ -260,8 +261,7 @@ def move():
             else:
                 fast = False
     except Exception as e:
-        print('move error occurred')
-        return 'Exception'
+        return Response('move error occurred')
     
     if move == 'forward':
         moveForward(duration, fast)
@@ -277,6 +277,8 @@ def move():
         moveBackwards(duration, fast)
     else:
         print('back move term provided')
+
+    return Reponse('move successful')
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
