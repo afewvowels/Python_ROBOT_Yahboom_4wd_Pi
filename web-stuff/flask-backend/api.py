@@ -92,7 +92,7 @@ def moveCServo(angle):
     freq = angle / 18 + 2
     GPIO.output(SERVO_CAMERA, True)
     sCamera.ChangeDutyCycle(freq)
-    sleep(1)
+    time.sleep(1)
     GPIO.output(SERVO_CAMERA, False)
     sCamera.ChangeDutyCycle(0)
 
