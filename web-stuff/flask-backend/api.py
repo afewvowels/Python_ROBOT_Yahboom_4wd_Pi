@@ -104,7 +104,7 @@ def test_button1():
 
 @app.route('/test_button2')
 def test_button2():
-    return returnJSONFormat('bad button pressed!', False)
+    return returnJSONFormat('bad button pressed!')
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
