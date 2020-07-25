@@ -20,7 +20,7 @@ import json
 # import imutils
 import cv2
 import gpiozero
-from gpiozero.pins.native import RPiGPIOFactory
+from gpiozero.pins.rpigpio import RPiGPIOFactory
 import signal
 
 # initialize output frame & thread lock for
