@@ -232,9 +232,9 @@ def led_set():
     (r, g, b) = color
     try:
         if request.method == 'POST':
-            r = request.args['led_r']
-            g = request.args['led_g']
-            b = request.args['led_b']
+            r = float(request.args['led_r'])
+            g = float(request.args['led_g'])
+            b = float(request.args['led_b'])
             state = request.args['led_state']
     except Exception as e:
         return Response('led set error occurred')
