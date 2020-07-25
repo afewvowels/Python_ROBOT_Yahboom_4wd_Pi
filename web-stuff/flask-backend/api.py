@@ -339,7 +339,6 @@ def rotate_c():
 
 @app.route('/save', methods=['GET'])
 def save():
-    global outputFrame
     name = 'stereo' + str(time.time()) + '.png'
     print(name)
     print(os.getcwd())
