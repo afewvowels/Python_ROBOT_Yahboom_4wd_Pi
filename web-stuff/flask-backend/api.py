@@ -42,7 +42,7 @@ time.sleep(2.0)
 gpiozero.Device.pin_factory = NativeFactory()
 
 # initialize leds
-led = gpiozero.RGBLED(15, 13, 18, active_high=True, initial_value=(0.0, 1.0, 0.0), pwn=False)
+led = gpiozero.RGBLED(15, 13, 18, active_high=True, initial_value=(0.0, 1.0, 0.0), pwm=False)
 
 # initialize motors && motor functions
 speed
