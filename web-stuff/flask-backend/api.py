@@ -20,7 +20,7 @@ import json
 # import imutils
 import cv2
 import gpiozero
-from gpiozero.pins.native import NativeFactory
+from gpiozero.pins.native import RPiGPIOFactory
 import signal
 
 # initialize output frame & thread lock for
@@ -39,13 +39,15 @@ vs.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 time.sleep(2.0)
 
 # initialize pin style for gpiozero
-gpiozero.Device.pin_factory = NativeFactory()
+gpiozero.Device.pin_factory = RPiGPIOFactory()
 
 # initialize pin style for RPi.GPIO
 GPIO.setmode(GPIO.BCM)
 
 # initialize leds
-led = gpiozero.RGBLED(15, 13, 18, active_high=True, initial_value=(0.0, 1.0, 0.0), pwm=False)
+led = gpiozero.RGBLED(22, 27, 24, active_high=True, initial_value=(0.0, 1.0, 0.0), pwm=False)
+
+
 
 # initialize motors && motor functions
 speed = 0.0
