@@ -93,16 +93,17 @@ export default function Controls() {
         console.log('duration: ' + duration);
         console.log('speed: ' + speed);
 
-        var data = new FormData();
+        var toSend = new URLSearchParams();
         
-        data.append('move', move);
-        data.append('duration', duration);
-        data.append('fast', speed);
+        toSend.append('move', move);
+        toSend.append('duration', duration);
+        toSend.append('fast', speed);
 
-        fetch('/move', {
-            method: 'POST',
-            body: data
-        });
+        console.log('/move?' + toSend.toString());
+
+        fetch('/move?' + toSend.toString(), {
+            method: 'POST'
+        }).then(response => response.text());
     }
 
     const ledState = value => () => {

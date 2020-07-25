@@ -76,6 +76,8 @@ def setSpeed(fast):
         speed = 50
     else:
         speed = 25
+    pwm_LEFT.ChangeDutyCycle(speed)
+    pwm_RIGHT.ChangeDutyCycle(speed)
 
 def stopMotors(duration=0.0):
     time.sleep(duration)
@@ -83,8 +85,6 @@ def stopMotors(duration=0.0):
     GPIO.output(lBackward, GPIO.LOW)
     GPIO.output(rForward, GPIO.LOW)
     GPIO.output(rBackward, GPIO.LOW)
-    pwm_LEFT.ChangeDutyCycle(speed)
-    pwm_RIGHT.ChangeDutyCycle(speed)
 
 def moveForward(duration, fast):
     setSpeed(fast)
@@ -92,8 +92,6 @@ def moveForward(duration, fast):
     GPIO.output(lBackward, GPIO.LOW)
     GPIO.output(rForward, GPIO.HIGH)
     GPIO.output(rBackward, GPIO.LOW)
-    pwm_LEFT.ChangeDutyCycle(speed)
-    pwm_RIGHT.ChangeDutyCycle(speed)
     stopMotors(duration)
 
 def moveLeft(duration, fast):
@@ -102,8 +100,6 @@ def moveLeft(duration, fast):
     GPIO.output(lBackward, GPIO.LOW)
     GPIO.output(rForward, GPIO.LOW)
     GPIO.output(rBackward, GPIO.LOW)
-    pwm_LEFT.ChangeDutyCycle(speed)
-    pwm_RIGHT.ChangeDutyCycle(speed)
     stopMotors(duration)
 
 def moveRight(duration, fast):
@@ -112,8 +108,6 @@ def moveRight(duration, fast):
     GPIO.output(lBackward, GPIO.LOW)
     GPIO.output(rForward, GPIO.HIGH)
     GPIO.output(rBackward, GPIO.LOW)
-    pwm_LEFT.ChangeDutyCycle(speed)
-    pwm_RIGHT.ChangeDutyCycle(speed)
     stopMotors(duration)
 
 def turnLeft(duration, fast):
@@ -122,8 +116,6 @@ def turnLeft(duration, fast):
     GPIO.output(lBackward, GPIO.LOW)
     GPIO.output(rForward, GPIO.LOW)
     GPIO.output(rBackward, GPIO.HIGH)
-    pwm_LEFT.ChangeDutyCycle(speed)
-    pwm_RIGHT.ChangeDutyCycle(speed)
     stopMotors(duration)
 
 def turnRight(duration, fast):
@@ -132,8 +124,6 @@ def turnRight(duration, fast):
     GPIO.output(lBackward, GPIO.HIGH)
     GPIO.output(rForward, GPIO.HIGH)
     GPIO.output(rBackward, GPIO.LOW)
-    pwm_LEFT.ChangeDutyCycle(speed)
-    pwm_RIGHT.ChangeDutyCycle(speed)
     stopMotors(duration)
 
 def moveBackwards(duration, fast):
@@ -142,8 +132,6 @@ def moveBackwards(duration, fast):
     GPIO.output(lBackward, GPIO.HIGH)
     GPIO.output(rForward, GPIO.LOW)
     GPIO.output(rBackward, GPIO.HIGH)
-    pwm_LEFT.ChangeDutyCycle(speed)
-    pwm_RIGHT.ChangeDutyCycle(speed)
     stopMotors(duration)
 
 
@@ -263,7 +251,7 @@ def move():
                 print('fast: yes')
             else:
                 fast = False
-                pring('fast: no')
+                print('fast: no')
     except Exception as e:
         return Response('move error occurred')
     
