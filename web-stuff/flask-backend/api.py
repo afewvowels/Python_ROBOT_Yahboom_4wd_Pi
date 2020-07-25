@@ -42,8 +42,7 @@ time.sleep(2.0)
 gpiozero.Device.pin_factory = NativeFactory()
 
 # initialize leds
-led = gpiozero.RGBLED(15, 13, 18)
-led.pulse(on_color=(0.0, 1.0, 0.0))
+led = gpiozero.RGBLED(15, 13, 18, active_high=True, initial_value=(0.0, 1.0, 0.0), pwn=False)
 
 # initialize motors && motor functions
 speed
@@ -194,8 +193,8 @@ def led_set():
         print('led error occurred')
         return
 
-    if state == 'pulse':
-        led.pulse(1, 1, color)
+    if state == 'blink':
+        led.blink(1, 1, 0, 0, color)
     elif state == 'on':
         led.color = color
     else:

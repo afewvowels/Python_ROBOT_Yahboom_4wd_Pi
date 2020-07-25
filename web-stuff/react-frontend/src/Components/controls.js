@@ -169,8 +169,8 @@ export default function Controls() {
                         <input type='radio' id='on' name='led-state' value='on' checked />
                         <label for='off'>Off:</label>
                         <input type='radio' id='off' name='led-state' value='off' />
-                        <label for='pulse'>Pulse:</label>
-                        <input type='radio' id='pulse' name='led-state' value='pulse' />
+                        <label for='pulse'>Blink:</label>
+                        <input type='radio' id='blink' name='led-state' value='blink' />
                     </span>
                     <span>
                         <p>Color Values:</p>
