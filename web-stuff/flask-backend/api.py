@@ -45,9 +45,7 @@ gpiozero.Device.pin_factory = RPiGPIOFactory()
 GPIO.setmode(GPIO.BCM)
 
 # initialize leds
-led = gpiozero.RGBLED(22, 27, 24, active_high=True, initial_value=(0.0, 1.0, 0.0), pwm=False)
-
-
+led = gpiozero.RGBLED(22, 27, 24, active_high=True, initial_value=(0.0, 1.0, 0.0), pwm=False, pin_factory=RPiGPIOFactory())
 
 # initialize motors && motor functions
 speed = 0.0
