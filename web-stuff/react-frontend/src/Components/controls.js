@@ -11,13 +11,17 @@ const MainWrapper = styled.main`
 export default function Controls() {
     const feed = document.getElementById('status-feed')
 
-    const button = (props) => {
-        var msgHTML = document.createElement('span');
-        fetch(props)
+    const button = value => () => {
+        fetch(value)
             .then(res => res.json())
             .then(data => {
-                msgHTML.innerHTML = data.msg
+                createSpan(data.msg);
             });
+    }
+
+    const createSpan = value => () => {
+        var msgHTML = document.createElement('span');
+        msgHTML.innerHTML = value
         document.getElementById('status-feed').appendChild(msgHTML);
     }
 

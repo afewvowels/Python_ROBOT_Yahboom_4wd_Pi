@@ -15,6 +15,7 @@ from flask import render_template
 import threading
 import argparse
 import datetime
+import json
 # import imutils
 import cv2
 
@@ -100,11 +101,11 @@ def returnJSONFormat(inString):
 
 @app.route('/test_button1')
 def test_button1():
-    return returnJSONFormat('button pressed!')
+    return json.dumps(returnJSONFormat('button pressed!'))
 
 @app.route('/test_button2')
 def test_button2():
-    return returnJSONFormat('bad button pressed!')
+    return json.dumps(returnJSONFormat('bad button pressed!'))
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
