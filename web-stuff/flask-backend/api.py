@@ -72,9 +72,9 @@ pwm_RIGHT.start(0)
 
 def setSpeed(fast):
     global speed
-    if fast:
+    if fast == True:
         speed = 50
-    else:
+    elif fast == False:
         speed = 25
     pwm_LEFT.ChangeDutyCycle(speed)
     pwm_RIGHT.ChangeDutyCycle(speed)
@@ -247,26 +247,26 @@ def move():
             duration = float(duration)
             fast = request.args['fast']
             if int(fast) == 0:
-                fast = True
+                fastBool = True
                 print('fast: yes')
-            else:
-                fast = False
+            elif int(fast) == 1:
+                fastBool = False
                 print('fast: no')
     except Exception as e:
         return Response('move error occurred')
     
     if move == 'forward':
-        moveForward(duration, fast)
+        moveForward(duration, fastBool)
     elif move == 'left':
-        moveLeft(duration, fast)
+        moveLeft(duration, fastBool)
     elif move == 'right':
-        moveRight(duration, fast)
+        moveRight(duration, fastBool)
     elif move == 'turn_left':
-        turnLeft(duration, fast)
+        turnLeft(duration, fastBool)
     elif move == 'turn_right':
-        turnRight(duration, fast)
+        turnRight(duration, fastBool)
     elif move == 'backward':
-        moveBackwards(duration, fast)
+        moveBackwards(duration, fastBool)
     else:
         print('back move term provided')
 
