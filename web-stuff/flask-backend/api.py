@@ -342,7 +342,7 @@ def save():
     name = '/home/pi/Pictures/Webcam/stereo' + str(time.time()) + '.png'
     print(name)
     print(os.getcwd())
-    image = cv2.UMat(vs.read())
+    image = np.float32(vs.read())
     (flag, png) = cv2.imencode('.png', image)
     cv2.imwrite(name, png, [cv2.IMWRITE_PNG_COMPRESSION, 0])
     return Response(str('image saved as: ' + os.getcwd() + name))
