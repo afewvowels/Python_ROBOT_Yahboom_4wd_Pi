@@ -232,10 +232,11 @@ def led_set():
     (r, g, b) = color
     try:
         if request.method == 'POST':
-            r = request.form['led_r']
-            g = request.form['led_g']
-            b = request.form['led_b']
-            state = request.form['led_state']
+            req_data = request.get_json()
+            r = req_data['led_r']
+            g = req_data['led_g']
+            b = req_data['led_b']
+            state = req_data['led_state']
     except Exception as e:
         print('led error occurred')
         return
@@ -251,10 +252,11 @@ def led_set():
 def move():
     try:
         if request.method == 'POST':
-            move = request.form['move']
-            duration = request.form['duration']
+            req_data = request.get_json()
+            move = req_data['move']
+            duration = req_data['duration']
             duration = float(duration)
-            fast = request.form['fast']
+            fast = req_data['fast']
             if int(fast) == 0:
                 fast = True
             else:
