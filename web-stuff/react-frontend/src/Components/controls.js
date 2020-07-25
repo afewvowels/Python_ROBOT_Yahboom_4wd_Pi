@@ -9,15 +9,34 @@ const MainWrapper = styled.main`
 `;
 
 export default function Controls() {
-    const [videoStream, setVideoStream] = useState(0);
+    const feed = document.getElementById('status-feed')
 
-    fetch('/cam1').then(image => {
-        setVideoStream
-    })
+    const button = (props) => {
+        fetch(props)
+            .then(res => res.json())
+            .then(data => {
+                constructMessage(data.msg, data.good);
+            });
+    }
+
+    const constructMessage = (props) => {
+        var msgHTML = document.createElement('span');
+        msgHTML.innerHTML = props[0];
+        if (props[1]) {
+            msgHTML.style.color = 'green';
+        } else {
+            msgHTML.style.color = 'red';
+        }
+        feed.appendChild(msgHTML);
+    }
 
     return(
         <MainWrapper>
             <p>Controls</p>
+            <img src='http://192.168.86.48:5000/cam1' />
+            <div id='status-feed'></div>
+            <button onClick={constructMessage('/test_button1')}>Test1</button>
+            <button onClick={constructMessage('/test_button2')}>Test2</button>
         </MainWrapper>
     );
 }

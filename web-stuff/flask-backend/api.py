@@ -95,6 +95,17 @@ def generate():
 def cam1():
     return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
+def returnJSONFormat(inString, good=True):
+    return {'msg' : inString, 'good' : good}
+
+@app.route('/test_button1')
+def test_button1():
+    return returnJSONFormat('button pressed!')
+
+@app.route('/test_button2')
+def test_button2():
+    return returnJSONFormat('bad button pressed!', False)
+
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument('-i', '--ip', type=str, default='0.0.0.0', help='ip address of the device')
