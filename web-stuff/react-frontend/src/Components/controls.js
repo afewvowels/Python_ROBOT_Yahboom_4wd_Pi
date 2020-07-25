@@ -114,12 +114,12 @@ export default function Controls() {
 
         state = document.querySelector('input[name="led-state"]:checked').value
 
-        var data = {
-            'led_r': r,
-            'led_g': g,
-            'led_b': b,
-            'led_state': state
-        }
+        var data = new FormData();
+
+        data.append('led_r', r);
+        data.append('led_g', g);
+        data.append('led_b', b);
+        data.append('led_state', state);
 
         fetch('/led_set', {
             method: 'POST',

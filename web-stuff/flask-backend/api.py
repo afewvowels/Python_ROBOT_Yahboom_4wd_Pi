@@ -232,11 +232,10 @@ def led_set():
     (r, g, b) = color
     try:
         if request.method == 'POST':
-            req_data = request.get_json()
-            r = req_data['led_r']
-            g = req_data['led_g']
-            b = req_data['led_b']
-            state = req_data['led_state']
+            r = request.form['led_r']
+            g = request.form['led_g']
+            b = request.form['led_b']
+            state = request.form['led_state']
     except Exception as e:
         print('led error occurred')
         return
@@ -248,24 +247,21 @@ def led_set():
     else:
         led.off()
 
-    return ''
-
 @app.route('/move', methods=['POST'])
 def move():
     try:
         if request.method == 'POST':
-            req_data = request.get_json()
-            move = req_data['move']
-            duration = req_data['duration']
+            move = request.form['move']
+            duration = request.form['duration']
             duration = float(duration)
-            fast = req_data['fast']
+            fast = request.form['fast']
             if int(fast) == 0:
                 fast = True
             else:
                 fast = False
     except Exception as e:
         print('move error occurred')
-        return
+        return 'Exception'
     
     if move == 'forward':
         moveForward(duration, fast)
@@ -281,8 +277,6 @@ def move():
         moveBackwards(duration, fast)
     else:
         print('back move term provided')
-
-    return ''
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
