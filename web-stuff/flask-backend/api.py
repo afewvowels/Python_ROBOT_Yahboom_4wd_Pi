@@ -240,7 +240,6 @@ def led_set():
         return Response('led set error occurred')
 
     if state == 'blink':
-        led.on()
         led.blink(1, 1, 0, 0, color)
     elif state == 'on':
         led.color = color
@@ -254,13 +253,17 @@ def move():
     try:
         if request.method == 'POST':
             move = request.args['move']
+            print('move: ' + move)
             duration = request.args['duration']
+            print('duration: ' + duration)
             duration = float(duration)
             fast = request.args['fast']
             if int(fast) == 0:
                 fast = True
+                print('fast: yes')
             else:
                 fast = False
+                pring('fast: no')
     except Exception as e:
         return Response('move error occurred')
     
