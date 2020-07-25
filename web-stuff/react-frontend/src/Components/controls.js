@@ -12,6 +12,13 @@ const MainWrapper = styled.main`
         / 33.3% 33.3% 33.3%;
     max-width: 100rem;
     justify-self: center;
+
+    img {
+        grid-area: video;
+        max-width: 100%;
+        align-self: center;
+        justify-self: center;
+    }
 `;
 
 const Heading = styled.h2`
@@ -19,13 +26,6 @@ const Heading = styled.h2`
     display: flex;
     align-items: flex-start;
     justify-content: center;
-`;
-
-const VideoFeed = styled.img`
-    grid-area: video;
-    max-width: 100%;
-    align-self: center;
-    justify-self: center;
 `;
 
 const MessageFeed = styled.div`
@@ -57,6 +57,21 @@ const Buttons = styled.section`
 `;
 
 export default function Controls() {
+    useEffect(() => {
+        const interval = setInterval(() => {
+            var videoFeed = document.getElementsByTagName('img');
+            
+            if (videoFeed.length > 0) {
+                videoFeed[0].remove();
+            }
+            
+            videoFeed = document.createElement('img');
+            videoFeed.src = 'http://192.168.86.48:5000/cam1';
+            document.getElementById('main-wrapper').appendChild(videoFeed);
+        }, 50);
+        return () => clearInterval(interval);
+    }, []);
+
     const button = value => () => {
         var msg, good
         var feed = document.getElementById('status-feed');
@@ -139,9 +154,8 @@ export default function Controls() {
     }
 
     return(
-        <MainWrapper>
+        <MainWrapper id='main-wrapper'>
             <Heading>Controls</Heading>
-            <VideoFeed src='http://192.168.86.48:5000/cam1' />
             <MessageFeed id='status-container'>
                 <FeedHeading>Messages</FeedHeading>
                 <FeedBody id='status-feed'></FeedBody>
