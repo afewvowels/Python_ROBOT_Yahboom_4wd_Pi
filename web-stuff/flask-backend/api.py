@@ -81,20 +81,30 @@ sUltrasonic = GPIO.PWM(SERVO_ULTRASONIC, 50)
 sCamera = GPIO.PWM(SERVO_CAMERA, 50)
 
 def moveUSServo(angle):
-    freq = angle / 18 + 2
-    GPIO.output(SERVO_ULTRASONIC, True)
-    sUltrasonic.ChangeDutyCycle(freq)
-    sleep(1)
-    GPIO.output(SERVO_ULTRASONIC, False)
-    sUltrasonic.ChangeDutyCycle(0)
+    # freq = angle / 18 + 2
+    # GPIO.output(SERVO_ULTRASONIC, True)
+    # sUltrasonic.ChangeDutyCycle(freq)
+    # sleep(1)
+    # GPIO.output(SERVO_ULTRASONIC, False)
+    # sUltrasonic.ChangeDutyCycle(0)
+    pulsewidth = (angle * 11) + 500
+    GPIO.output(SERVO_ULTRASONIC, GPIO.HIGH)
+    time.sleep(pulsewidth/1000000.0)
+    GPIO.output(SERVO_ULTRASONIC, GPIO.LOW)
+    time.sleep(20.0/1000-pulsewidth/1000000.0)
 
 def moveCServo(angle):
-    freq = angle / 18 + 2
-    GPIO.output(SERVO_CAMERA, True)
-    sCamera.ChangeDutyCycle(freq)
-    time.sleep(1)
-    GPIO.output(SERVO_CAMERA, False)
-    sCamera.ChangeDutyCycle(0)
+    # freq = angle / 18 + 2
+    # GPIO.output(SERVO_CAMERA, True)
+    # sCamera.ChangeDutyCycle(freq)
+    # time.sleep(1)
+    # GPIO.output(SERVO_CAMERA, False)
+    # sCamera.ChangeDutyCycle(0)
+    pulsewidth = (angle * 11) + 500
+    GPIO.output(SERVO_CAMERA, GPIO.HIGH)
+    time.sleep(pulsewidth/1000000.0)
+    GPIO.output(SERVO_CAMERA, GPIO.LOW)
+    time.sleep(20.0/1000-pulsewidth/1000000.0)
 
 # initialize motors && motor functions
 speed = 0.0
