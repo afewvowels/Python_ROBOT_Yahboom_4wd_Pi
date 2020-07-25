@@ -341,6 +341,8 @@ def rotate_c():
 def save():
     global outputFrame
     name = 'stereo' + str(time.time()) + '.png'
+    print(name)
+    print(os.getcwd())
     cv2.imwrite(name, outputFrame)
     return Response(str('image saved as: ' + os.getcwd() + name))
 
