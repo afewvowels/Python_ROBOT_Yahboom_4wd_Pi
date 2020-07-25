@@ -80,20 +80,24 @@ export default function Controls() {
 
     const move = value => () => {
         var move = value;
-        var speed = document.getElementById('go-fast').value;
+        var speed = document.getElementById('go-fast');
         var duration = document.getElementById('duration').value;
 
-        if (speed == 'go-fast') {
+        if (speed.checked) {
             speed = 0;
         } else {
             speed = 1;
         }
 
-        var data = {
-            'move': move,
-            'duration': parseInt(duration),
-            'fast': speed
-        }
+        console.log('move: ' + move);
+        console.log('duration: ' + duration);
+        console.log('speed: ' + speed);
+
+        var data = new FormData();
+        
+        data.append('move', move);
+        data.append('duration', duration);
+        data.append('fast', speed);
 
         fetch('/move', {
             method: 'POST',

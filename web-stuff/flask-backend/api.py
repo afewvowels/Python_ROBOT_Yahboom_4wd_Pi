@@ -278,7 +278,7 @@ def move():
     else:
         print('back move term provided')
 
-    return Reponse('move successful')
+    return Response('move successful')
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
