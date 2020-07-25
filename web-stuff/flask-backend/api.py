@@ -342,7 +342,7 @@ def save():
     name = 'stereo' + str(time.time()) + '.png'
     print(name)
     print(os.getcwd())
-    png = cv2.imencode('.png', outputFrame)
+    (flag, png) = cv2.imencode('.png', outputFrame)
     cv2.imwrite(name, png)
     return Response(str('image saved as: ' + os.getcwd() + name))
 
