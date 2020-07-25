@@ -19,6 +19,7 @@ import json
 # import imutils
 import cv2
 import gpiozero
+from gpiozero.pins.native import NativeFactory
 import requests
 import signal
 
@@ -38,7 +39,7 @@ vs.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 time.sleep(2.0)
 
 # initialize pin style for gpiozero
-gpiozero.Device.pin_factory = gpiozero.pins.native.NativeFactory()
+gpiozero.Device.pin_factory = NativeFactory()
 
 # initialize leds
 led = gpiozero.RGBLED(15, 13, 18)
