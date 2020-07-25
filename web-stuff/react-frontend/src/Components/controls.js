@@ -107,29 +107,35 @@ export default function Controls() {
     }
 
     const ledState = value => () => {
-        var r, g, b, state
-        r = document.getElementById('red').value
-        r = r / 100.0
+        var r, g, b;
 
-        g = document.getElementById('green').value
-        g = g / 100.0
+        if (document.getElementById('red').checked) {
+            r = 0;
+        } else {
+            r = 1;
+        }
 
-        b = document.getElementById('blue').value
-        b = b / 100.0
+        if (document.getElementById('green').checked) {
+            g = 0;
+        } else {
+            g = 1;
+        }
 
-        state = document.querySelector('input[name="led-state"]:checked').value
+        if (document.getElementById('blue').checked) {
+            b = 0;
+        } else {
+            b = 1;
+        }
 
-        var data = new FormData();
+        var data = new URLSearchParams();
 
         data.append('led_r', r);
         data.append('led_g', g);
         data.append('led_b', b);
-        data.append('led_state', state);
 
-        fetch('/led_set', {
-            method: 'POST',
-            body: data
-        })
+        fetch('/led_set?' + data.toString(), {
+            method: 'POST'
+        }).then(response => response.text());
     }
 
     return(
@@ -169,22 +175,13 @@ export default function Controls() {
                 <div>
                     <h3>LED Controls</h3>
                     <span>
-                        <p>LED State:</p>
-                        <label for='on'>On:</label>
-                        <input type='radio' id='on' name='led-state' value='on' checked />
-                        <label for='off'>Off:</label>
-                        <input type='radio' id='off' name='led-state' value='off' />
-                        <label for='pulse'>Blink:</label>
-                        <input type='radio' id='blink' name='led-state' value='blink' />
-                    </span>
-                    <span>
                         <p>Color Values:</p>
                         <label for='red'>Red:</label>
-                        <input type='range' id='red' name='red' min='0' max='100' />
+                        <input type='checkbox' id='red' name='red' />
                         <label for='green'>Green:</label>
-                        <input type='range' id='green' name='green' min='0' max='100' />
+                        <input type='checkbox' id='green' name='green' />
                         <label for='blue'>Blue:</label>
-                        <input type='range' id='blue' name='blue' min='0' max='100' />
+                        <input type='checkbox' id='blue' name='blue' />
                     </span>
                     <button onClick={ledState()}>Submit</button>
                 </div>

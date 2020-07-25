@@ -19,8 +19,8 @@ import datetime
 import json
 # import imutils
 import cv2
-import gpiozero
-from gpiozero.pins.rpigpio import RPiGPIOFactory
+# import gpiozero
+# from gpiozero.pins.rpigpio import RPiGPIOFactory
 import signal
 
 # initialize output frame & thread lock for
@@ -39,13 +39,36 @@ vs.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 time.sleep(2.0)
 
 # initialize pin style for gpiozero
-gpiozero.Device.pin_factory = RPiGPIOFactory()
+# gpiozero.Device.pin_factory = RPiGPIOFactory()
 
 # initialize pin style for RPi.GPIO
 GPIO.setmode(GPIO.BCM)
 
 # initialize leds
-led = gpiozero.RGBLED(22, 27, 24, active_high=True, initial_value=(0.0, 1.0, 0.0), pwm=False, pin_factory=RPiGPIOFactory())
+# led = gpiozero.RGBLED(22, 27, 24, active_high=True, initial_value=(0.0, 1.0, 0.0), pwm=False, pin_factory=RPiGPIOFactory())
+LED_R = 22
+LED_G = 27
+LED_B = 24
+
+GPIO.setup(LED_R, GPIO.OUT)
+GPIO.setup(LED_G, GPIO.OUT)
+GPIO.setup(LED_B, GPIO.OUT)
+
+def led_values(r, g, b):
+    if r == 0:
+        GPIO.output(LED_R, GPIO.HIGH)
+    else:
+        GPIO.output(LED_R, GPIO.LOW)
+
+    if g == 0:
+        GPIO.output(LED_G, GPIO.HIGH)
+    else:
+        GPIO.output(LED_G, GPIO.LOW)
+    
+    if b == 0:
+        GPIO.output(LED_B, GPIO.HIGH)
+    else:
+        GPIO.output(LED_B, GPIO.LOW)
 
 # initialize motors && motor functions
 speed = 0.0
@@ -216,23 +239,15 @@ def test_button2():
 
 @app.route('/led_set', methods=['POST'])
 def led_set():
-    color = (0.0, 0.0, 0.0)
-    (r, g, b) = color
     try:
         if request.method == 'POST':
-            r = float(request.args['led_r'])
-            g = float(request.args['led_g'])
-            b = float(request.args['led_b'])
-            state = request.args['led_state']
+            r = int(request.args['led_r'])
+            g = int(request.args['led_g'])
+            b = int(request.args['led_b'])
     except Exception as e:
         return Response('led set error occurred')
 
-    if state == 'blink':
-        led.blink(1, 1, 0, 0, color)
-    elif state == 'on':
-        led.color = color
-    else:
-        led.off()
+    led_values(r, g, b)
 
     return Response(str('led set successful, set to state: ' + state + ' r: ' + str(r) + ' g: ' + str(g) + ' b: ' + str(b)))
 
