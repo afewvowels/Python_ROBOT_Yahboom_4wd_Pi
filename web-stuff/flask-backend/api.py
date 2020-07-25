@@ -340,13 +340,11 @@ def rotate_c():
 @app.route('/save', methods=['GET'])
 def save():
     global vs
-    name = '/home/pi/Pictures/Webcam/stereo' + str(time.time()) + '.png'
-    print(name)
-    print(os.getcwd())
-    image = np.float32(vs.read())
-    (flag, png) = cv2.imencode('.png', image)
-    cv2.imwrite(name, png, [cv2.IMWRITE_PNG_COMPRESSION, 0])
-    return Response(str('image saved as: ' + os.getcwd() + name))
+    name = '/home/pi/Pictures/Webcam/stereo' + str(time.time()) + '.jpg'
+    image = vs.read()
+    (flag, jpg) = cv2.imencode('.jpg', image)
+    cv2.imwrite(name, jpg, [cv2.IMWRITE_JPEG_QUALITY, 95])
+    return Response(str('image saved as: ' + name))
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
