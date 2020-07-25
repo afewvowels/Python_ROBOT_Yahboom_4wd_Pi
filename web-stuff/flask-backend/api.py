@@ -217,26 +217,25 @@ def detect_motion(frameCount):
 
     while True:
         ret, frame = vs.read()
-        # cropped = frame[0:480, 0:640]
-        cropped = frame
-        # gray = cv2.cvtColor(cropped, cv2.COLOR_BGR2GRAY)
-        # gray = cv2.GaussianBlur(gray, (7, 7), 0)
+        cropped = frame[0:480, 0:640]
+        gray = cv2.cvtColor(cropped, cv2.COLOR_BGR2GRAY)
+        gray = cv2.GaussianBlur(gray, (7, 7), 0)
 
-        # timestamp = datetime.datetime.now()
-        # cv2.putText(frame, timestamp.strftime(
-        #     '%A %d %B %Y %I:%M:%S%p'),
-        #     (10, cropped.shape[0] - 10),
-        #     cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
+        timestamp = datetime.datetime.now()
+        cv2.putText(frame, timestamp.strftime(
+            '%A %d %B %Y %I:%M:%S%p'),
+            (10, cropped.shape[0] - 10),
+            cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
 
-        # if total > frameCount:
-        #     motion = md.detect(gray)
+        if total > frameCount:
+            motion = md.detect(gray)
 
-        #     if motion is not None:
-        #         (thresh, (minX, minY, maxX, maxY)) = motion
-        #         cv2.rectangle(frame, (minX, minY), (maxX, maxY), (0, 0, 255), 2)
+            if motion is not None:
+                (thresh, (minX, minY, maxX, maxY)) = motion
+                cv2.rectangle(frame, (minX, minY), (maxX, maxY), (0, 0, 255), 2)
             
-        # md.update(gray)
-        # total += 1
+        md.update(gray)
+        total += 1
 
         with lock:
             outputFrame = cropped.copy()
@@ -339,6 +338,7 @@ def rotate_c():
 
 @app.route('/save', methods=['GET'])
 def save():
+    global vs
     name = '/home/pi/Pictures/Webcam/stereo' + str(time.time()) + '.png'
     print(name)
     print(os.getcwd())
