@@ -12,7 +12,7 @@ from flask import Response
 from flask import render_template
 from flask import request
 # from imutils.video import VideoStream
-# import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 import threading
 import argparse
 import datetime
@@ -41,63 +41,109 @@ time.sleep(2.0)
 # initialize pin style for gpiozero
 gpiozero.Device.pin_factory = NativeFactory()
 
+# initialize pin style for RPi.GPIO
+GPIO.setmode(GPIO.BCM)
+
 # initialize leds
 led = gpiozero.RGBLED(15, 13, 18, active_high=True, initial_value=(0.0, 1.0, 0.0), pwm=False)
 
 # initialize motors && motor functions
 speed = 0.0
 
-lMotor = gpiozero.Motor(40, 38, 36)
-lMotor.stop()
-rMotor = gpiozero.Motor(37, 35, 33)
-rMotor.stop()
+lForward = 20
+lBackward = 21
+lPWM = 16
+
+rForward = 19
+rBackward = 26
+rPWM = 13
+
+GPIO.setup(lPWM,GPIO.OUT,initial=GPIO.HIGH)
+GPIO.setup(lForward,GPIO.OUT,initial=GPIO.LOW)
+GPIO.setup(lBackward,GPIO.OUT,initial=GPIO.LOW)
+GPIO.setup(rPWM,GPIO.OUT,initial=GPIO.HIGH)
+GPIO.setup(rForward,GPIO.OUT,initial=GPIO.LOW)
+GPIO.setup(rBackward,GPIO.OUT,initial=GPIO.LOW)
+#Set the PWM pin and frequency is 2000hz
+pwm_LEFT = GPIO.PWM(lPWM, 2000)
+pwm_RIGHT = GPIO.PWM(rPWM, 2000)
+pwm_LEFT.start(0)
+pwm_RIGHT.start(0)
 
 def setSpeed(fast):
     global speed
     if fast:
-        speed = 0.66
+        speed = 50
     else:
-        speed = 0.33
+        speed = 25
 
 def stopMotors(duration=0.0):
     time.sleep(duration)
-    lMotor.stop()
-    rMotor.stop()
+    GPIO.output(lForward, GPIO.LOW)
+    GPIO.output(lBackward, GPIO.LOW)
+    GPIO.output(rForward, GPIO.LOW)
+    GPIO.output(rBackward, GPIO.LOW)
+    pwm_LEFT.ChangeDutyCycle(speed)
+    pwm_RIGHT.ChangeDutyCycle(speed)
 
 def moveForward(duration, fast):
     setSpeed(fast)
-    lMotor.forward(speed)
-    rMotor.forward(speed)
+    GPIO.output(lForward, GPIO.HIGH)
+    GPIO.output(lBackward, GPIO.LOW)
+    GPIO.output(rForward, GPIO.HIGH)
+    GPIO.output(rBackward, GPIO.LOW)
+    pwm_LEFT.ChangeDutyCycle(speed)
+    pwm_RIGHT.ChangeDutyCycle(speed)
     stopMotors(duration)
 
 def moveLeft(duration, fast):
     setSpeed(fast)
-    lMotor.forward(speed)
-    rMotor.stop()
+    GPIO.output(lForward, GPIO.HIGH)
+    GPIO.output(lBackward, GPIO.LOW)
+    GPIO.output(rForward, GPIO.LOW)
+    GPIO.output(rBackward, GPIO.LOW)
+    pwm_LEFT.ChangeDutyCycle(speed)
+    pwm_RIGHT.ChangeDutyCycle(speed)
     stopMotors(duration)
 
 def moveRight(duration, fast):
     setSpeed(fast)
-    lMotor.stop()
-    rMotor.forward(speed)
+    GPIO.output(lForward, GPIO.LOW)
+    GPIO.output(lBackward, GPIO.LOW)
+    GPIO.output(rForward, GPIO.HIGH)
+    GPIO.output(rBackward, GPIO.LOW)
+    pwm_LEFT.ChangeDutyCycle(speed)
+    pwm_RIGHT.ChangeDutyCycle(speed)
     stopMotors(duration)
 
 def turnLeft(duration, fast):
     setSpeed(fast)
-    lMotor.forward(speed)
-    rMotor.backward(speed)
+    GPIO.output(lForward, GPIO.HIGH)
+    GPIO.output(lBackward, GPIO.LOW)
+    GPIO.output(rForward, GPIO.LOW)
+    GPIO.output(rBackward, GPIO.HIGH)
+    pwm_LEFT.ChangeDutyCycle(speed)
+    pwm_RIGHT.ChangeDutyCycle(speed)
     stopMotors(duration)
 
 def turnRight(duration, fast):
     setSpeed(fast)
-    lMotor.backward(speed)
-    rMotor.forward(speed)
+    GPIO.output(lForward, GPIO.LOW)
+    GPIO.output(lBackward, GPIO.HIGH)
+    GPIO.output(rForward, GPIO.HIGH)
+    GPIO.output(rBackward, GPIO.LOW)
+    pwm_LEFT.ChangeDutyCycle(speed)
+    pwm_RIGHT.ChangeDutyCycle(speed)
     stopMotors(duration)
 
 def moveBackwards(duration, fast):
     setSpeed(fast)
-    lMotor.backward(speed)
-    rMotor.backward(speed)
+    GPIO.output(lForward, GPIO.LOW)
+    GPIO.output(lBackward, GPIO.HIGH)
+    GPIO.output(rForward, GPIO.LOW)
+    GPIO.output(rBackward, GPIO.HIGH)
+    pwm_LEFT.ChangeDutyCycle(speed)
+    pwm_RIGHT.ChangeDutyCycle(speed)
     stopMotors(duration)
 
 
