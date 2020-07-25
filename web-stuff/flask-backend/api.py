@@ -247,7 +247,7 @@ def led_set():
     else:
         led.off()
 
-    return Response(str('led set successful, set to: ' + color))
+    return Response(str('led set successful, set to state: ' + state + ' r: ' + r + ' g: ' + g + ' b: ' + b))
 
 @app.route('/move', methods=['POST'])
 def move():
