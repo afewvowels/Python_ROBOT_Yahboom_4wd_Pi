@@ -339,7 +339,7 @@ def rotate_c():
 
 @app.route('/save', methods=['GET'])
 def save():
-    name = 'stereo' + str(time.time()) + '.png'
+    name = '/home/pi/Pictures/Webcam/stereo' + str(time.time()) + '.png'
     print(name)
     print(os.getcwd())
     (flag, png) = cv2.imencode('.png', outputFrame)
