@@ -16,6 +16,7 @@ export default function Controls() {
             .then(res => res.json())
             .then(data => {
                 createSpan(data.msg);
+                console.log(data.msg);
             });
     }
 

@@ -96,8 +96,8 @@ def generate():
 def cam1():
     return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
-def returnJSONFormat(inString):
-    return {'msg' : inString}
+def returnJSONFormat(inString, good=True):
+    return {'msg' : inString, 'good': good}
 
 @app.route('/test_button1')
 def test_button1():
@@ -105,7 +105,7 @@ def test_button1():
 
 @app.route('/test_button2')
 def test_button2():
-    return json.dumps(returnJSONFormat('bad button pressed!'))
+    return json.dumps(returnJSONFormat('bad button pressed!', False))
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
