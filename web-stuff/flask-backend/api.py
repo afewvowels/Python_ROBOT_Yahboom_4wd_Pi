@@ -226,7 +226,7 @@ def test_button1():
 def test_button2():
     return json.dumps(returnJSONFormat('bad button pressed!', False))
 
-@app.route('/led_set', methods=['GET', 'POST'])
+@app.route('/led_set', methods=['POST'])
 def led_set():
     color = (0.0, 0.0, 0.0)
     (r, g, b) = color
@@ -246,10 +246,8 @@ def led_set():
         led.color = color
     else:
         led.off()
-    
-    return 'Set LEDs'
 
-@app.route('/move', methods=['GET', 'POST'])
+@app.route('/move', methods=['POST'])
 def move():
     try:
         if request.method == 'POST':
@@ -279,8 +277,6 @@ def move():
         moveBackwards(duration, fast)
     else:
         print('back move term provided')
-
-    return 'Moved'
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
