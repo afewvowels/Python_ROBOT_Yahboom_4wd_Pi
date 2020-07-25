@@ -342,7 +342,8 @@ def save():
     name = 'stereo' + str(time.time()) + '.png'
     print(name)
     print(os.getcwd())
-    cv2.imwrite(name, outputFrame)
+    png = cv2.imencode('.png', outputFrame)
+    cv2.imwrite(name, png)
     return Response(str('image saved as: ' + os.getcwd() + name))
 
 if __name__ == '__main__':
