@@ -246,6 +246,8 @@ def led_set():
         led.color = color
     else:
         led.off()
+    
+    return 'Set LEDs'
 
 @app.route('/move', methods=['GET', 'POST'])
 def move():
@@ -277,6 +279,8 @@ def move():
         moveBackwards(duration, fast)
     else:
         print('back move term provided')
+
+    return 'Moved'
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()

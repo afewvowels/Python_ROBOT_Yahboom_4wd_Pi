@@ -91,7 +91,7 @@ export default function Controls() {
 
         var data = {
             'move': move,
-            'duration': duration,
+            'duration': parseInt(duration),
             'fast': speed
         }
 
