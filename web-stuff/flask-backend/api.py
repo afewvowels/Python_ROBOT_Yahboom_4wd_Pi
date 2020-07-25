@@ -45,7 +45,7 @@ gpiozero.Device.pin_factory = NativeFactory()
 led = gpiozero.RGBLED(15, 13, 18, active_high=True, initial_value=(0.0, 1.0, 0.0), pwm=False)
 
 # initialize motors && motor functions
-speed
+speed = 0.0
 
 lMotor = gpiozero.Motor(40, 38, 36)
 lMotor.stop()
@@ -53,13 +53,14 @@ rMotor = gpiozero.Motor(37, 35, 33)
 rMotor.stop()
 
 def setSpeed(fast):
+    global speed
     if fast:
         speed = 0.66
     else:
         speed = 0.33
 
 def stopMotors(duration=0.0):
-    signal.pause(duration)
+    time.sleep(duration)
     lMotor.stop()
     rMotor.stop()
 
