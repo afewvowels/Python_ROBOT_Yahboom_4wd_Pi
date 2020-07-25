@@ -18,6 +18,9 @@ import datetime
 import json
 # import imutils
 import cv2
+import gpiozero
+import requests
+import signal
 
 # initialize output frame & thread lock for
 # multiple browser views
@@ -33,6 +36,69 @@ vs = cv2.VideoCapture(0)
 vs.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
 vs.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 time.sleep(2.0)
+
+# initialize pin style for gpiozero
+gpiozero.Device.pin_factory = gpiozero.pins.native.NativeFactory()
+
+# initialize leds
+led = gpiozero.RGBLED(15, 13, 18)
+led.pulse(on_color=(0.0, 1.0, 0.0))
+
+# initialize motors && motor functions
+speed
+
+lMotor = gpiozero.Motor(40, 38, 36)
+lMotor.stop()
+rMotor = gpiozero.Motor(37, 35, 33)
+rMotor.stop()
+
+def setSpeed(fast)
+    if fast:
+        speed = 0.66
+    else:
+        speed = 0.33
+
+def stopMotors(duration=0.0):
+    signal.pause(duration)
+    lMotor.stop()
+    rMotor.stop()
+
+def moveForward(duration, fast):
+    setSpeed(fast)
+    lMotor.forward(speed)
+    rMotor.forward(speed)
+    stopMotors(duration)
+
+def moveLeft(duration, fast):
+    setSpeed(fast)
+    lMotor.forward(speed)
+    rMotor.stop()
+    stopMotors(duration)
+
+def moveRight(duration, fast):
+    setSpeed(fast)
+    lMotor.stop()
+    rMotor.forward(speed)
+    stopMotors(duration)
+
+def turnLeft(duration, fast):
+    setSpeed(fast)
+    lMotor.forward(speed)
+    rMotor.backward(speed)
+    stopMotors(duration)
+
+def turnRight(duration, fast):
+    setSpeed(fast)
+    lMotor.backward(speed)
+    rMotor.forward(speed)
+    stopMotors(duration)
+
+def moveBackwards(duration, fast):
+    setSpeed(fast)
+    lMotor.backward(speed)
+    rMotor.backward(speed)
+    stopMotors(duration)
+
 
 @app.route('/')
 def test_index():
@@ -96,8 +162,14 @@ def generate():
 def cam1():
     return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
+def appendTime():
+    timestamp = datetime.datetime.now()
+    timestamp = timestamp.strftime('%I:%M:%S%p')
+    timestamp += ' '
+    return timestamp
+
 def returnJSONFormat(inString, good=True):
-    return {'msg' : inString, 'good': good}
+    return {'msg' : appendTime() + inString, 'good': good}
 
 @app.route('/test_button1')
 def test_button1():
@@ -106,6 +178,58 @@ def test_button1():
 @app.route('/test_button2')
 def test_button2():
     return json.dumps(returnJSONFormat('bad button pressed!', False))
+
+@app.route('/led_set', methods=['GET', 'POST'])
+def led_set():
+    color = (0.0, 0.0, 0.0)
+    (r, g, b) = color
+    try:
+        if request.method == 'POST':
+            r = request.form['led_r']
+            g = request.form['led_g']
+            b = request.form['led_b']
+            state = request.form['led_state']
+    except Exception as e:
+        print('led error occurred')
+        return
+
+    if state == 'pulse':
+        led.pulse(1, 1, color)
+    elif state == 'on':
+        led.color = color
+    else:
+        led.off()
+
+@app.route('/move', methods=['GET', 'POST'])
+def move():
+    try:
+        if request.method == 'POST':
+            move = request.form['move']
+            duration = request.form['duration']
+            duration = float(duration)
+            fast = request.form['fast']
+            if int(fast) == 0:
+                fast = True
+            else:
+                fast = False
+    except Exception as e:
+        print('move error occurred')
+        return
+    
+    if move == 'forward':
+        moveForward(duration, fast)
+    elif move == 'left':
+        moveLeft(duration, fast)
+    elif move == 'right':
+        moveRight(duration, fast)
+    elif move == 'turn_left':
+        turnLeft(duration, fast)
+    elif move == 'turn_right':
+        turnRight(duration, fast)
+    elif move == 'backward':
+        moveBackwards(duration, fast)
+    else:
+        print('back move term provided')
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()

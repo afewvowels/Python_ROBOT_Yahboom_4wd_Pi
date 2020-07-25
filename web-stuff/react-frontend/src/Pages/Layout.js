@@ -18,7 +18,7 @@ const GlobalStyle = createGlobalStyle`
         font-family: 'Roboto', sans-serif;
         color: ${global.color};
         background-color: ${global.background};
-        min-height: 100vh;
+        height: 100vh;
         display: grid;
         grid-template:
             "header" 4rem
