@@ -29,8 +29,8 @@ app = Flask(__name__)
 # intialize video stream
 # vs = VideoStream(src=0, usePiCam=False, resolution=(1280, 480)).start()
 vs = cv2.VideoCapture(0)
-vs.set(cv2.CAP_PROP_FRAME_WIDTH, 2560)
-vs.set(cv2.CAP_PROP_FRAME_HEIGHT, 960)
+vs.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+vs.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 time.sleep(2.0)
 
 @app.route('/')
@@ -53,8 +53,7 @@ def detect_motion(frameCount):
 
     while True:
         frame = vs.read()
-        # frame = imutils.resize(frame, width=1280)
-        cropped = frame[0:960, 0:1280]
+        cropped = frame[0:480, 0:640]
         gray = cv2.cvtColor(cropped, cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray, (7, 7), 0)
 
