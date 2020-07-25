@@ -337,7 +337,7 @@ def rotate_c():
 
 @app.route('/save', methods=['GET'])
 def save():
-    name = 'stero' + time.time() + '.png'
+    name = 'stero' + str(time.time()) + '.png'
     cv2.imwrite(name, outputFrame)
     return Response(str('saved image ' + name))
 
