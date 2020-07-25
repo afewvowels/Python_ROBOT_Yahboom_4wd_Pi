@@ -12,6 +12,7 @@ from flask import Response
 from flask import render_template
 from flask import request
 # from imutils.video import VideoStream
+import numpy as np
 import RPi.GPIO as GPIO
 import threading
 import argparse
