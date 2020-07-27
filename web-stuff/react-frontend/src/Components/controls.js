@@ -10,7 +10,8 @@ const MainWrapper = styled.main`
         'video video messages' auto
         'buttons buttons buttons' auto
         / 33.3% 33.3% 33.3%;
-    max-width: 100rem;
+    width: auto;
+    max-width: 50rem;
     justify-self: center;
 
     img {
@@ -18,6 +19,18 @@ const MainWrapper = styled.main`
         max-width: 100%;
         align-self: center;
         justify-self: center;
+    }
+
+    button {
+        background-color: #fafafa;
+        border: 1px solid #2a2a2a;
+        border-radius: .1rem;
+        min-width: 4rem;
+        min-height: 1.5rem;
+    }
+
+    label {
+        font-weight: 300;
     }
 `;
 
@@ -36,11 +49,12 @@ const MessageFeed = styled.div`
     justify-content: flex-start;
 `;
 
-const FeedHeading = styled.h3`
+const ControlHeading = styled.h3`
     display: flex;
     align-items: center;
     justify-content: center;
     height: 2.5rem;
+    font-weight: 300;
 `;
 
 const FeedBody = styled.div`
@@ -54,6 +68,73 @@ const FeedBody = styled.div`
 
 const Buttons = styled.section`
     grid-area: buttons;
+`;
+
+const MovementWrapper = styled.div`
+    > * + * {
+        margin-top: 0.5rem;
+    }
+`;
+
+const MoveControlsWrapper = styled.div`
+    display: grid;
+    grid-template:
+        'rLeft forward rRight' 2rem
+        'left backward right' 2rem
+        / 33.3% 33.4% 33.3%;
+    gap: 2px 2px;
+`;
+
+const MoveModifyWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+`;
+
+const LEDWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+
+    > h3 {
+        align-self: center;
+    }
+
+    > span {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    > * + * {
+        margin-top: 0.5rem;
+    }
+`;
+
+const ServoWrapper = styled.div`
+    display: grid;
+    grid-template:
+        'heading heading' auto
+        'camera us' auto
+        / 50% 50%;
+    gap: 5px 5px;
+
+    > h3 {
+        grid-area: heading;
+    }
+
+    > span {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+
+        * + * {
+            margin-top: 0.5rem;
+        }
+    }
 `;
 
 export default function Controls() {
@@ -185,39 +266,38 @@ export default function Controls() {
         <MainWrapper id='main-wrapper'>
             <Heading>Controls</Heading>
             <MessageFeed id='status-container'>
-                <FeedHeading>Messages</FeedHeading>
+                <ControlHeading>Messages</ControlHeading>
                 <FeedBody id='status-feed'></FeedBody>
             </MessageFeed>
             <Buttons>
-                <div>
-                    <h3>Functions</h3>
-                    <button onClick={button('/test_button1')}>Test1</button>
-                    <button onClick={button('/test_button2')}>Test2</button>
-                </div>
-                <div>
-                    <h3>Movement</h3>
-                    <button onClick={move('turn_left')}>T Left</button>
-                    <button onClick={move('forward')}>Forward</button>
-                    <button onClick={move('turn_right')}>T Right</button>
-                    <button onClick={move('left')}>Left</button>
-                    <button onClick={move('backward')}>Backward</button>
-                    <button onClick={move('right')}>Right</button>
-                    <label for='duration'>Duration of move (1 to 5):</label>
-                    <input type='range' id='duration' name='duration' min='1' max='5' list='tickmarks-duration' />
-                    <datalist id="tickmarks-duration">
-                        <option value="1" label="1"></option>
-                        <option value="2"></option>
-                        <option value="3" label="3"></option>
-                        <option value="4"></option>
-                        <option value="5" label="5"></option>
-                    </datalist>
-                    <label for='go-fast'>Go Fast!:</label>
-                    <input type='checkbox' id='go-fast' name='go-fast' value='go-fast' />
-                </div>
-                <div>
-                    <h3>LED Controls</h3>
+                <MovementWrapper>
+                    <ControlHeading>Movement</ControlHeading>
+                    <MoveControlsWrapper>
+                        <button onClick={move('turn_left')}>T Left</button>
+                        <button onClick={move('forward')}>Forward</button>
+                        <button onClick={move('turn_right')}>T Right</button>
+                        <button onClick={move('left')}>Left</button>
+                        <button onClick={move('backward')}>Backward</button>
+                        <button onClick={move('right')}>Right</button>
+                    </MoveControlsWrapper>
+                    <MoveModifyWrapper>
+                        <label for='duration'>Duration of move (1 to 5):</label>
+                        <input type='range' id='duration' name='duration' min='1' max='5' list='tickmarks-duration' />
+                        <datalist id="tickmarks-duration">
+                            <option value="1" label="1"></option>
+                            <option value="2"></option>
+                            <option value="3" label="3"></option>
+                            <option value="4"></option>
+                            <option value="5" label="5"></option>
+                        </datalist>
+                        <label for='go-fast'>Go Fast!:</label>
+                        <input type='checkbox' id='go-fast' name='go-fast' value='go-fast' />
+                    </MoveModifyWrapper>
+                </MovementWrapper>
+                <LEDWrapper>
+                    <ControlHeading>LED Controls</ControlHeading>
+                    <p>Color Values:</p>
                     <span>
-                        <p>Color Values:</p>
                         <label for='red'>Red:</label>
                         <input type='checkbox' id='red' name='red' />
                         <label for='green'>Green:</label>
@@ -226,21 +306,26 @@ export default function Controls() {
                         <input type='checkbox' id='blue' name='blue' />
                     </span>
                     <button onClick={ledState()}>Submit</button>
-                </div>
-                <div>
-                    <h3>Servo Controls</h3>
+                </LEDWrapper>
+                <ServoWrapper>
+                    <ControlHeading>Servo Controls</ControlHeading>
                     <span>
                         <label for='camera'>Camera:</label>
                         <input type='range' id='camera' name='camera' min='0' max='180' step='1' />
-                        <button onClick={setServo('camera')}>Camera</button>
+                        <button onClick={setServo('camera')}>Send</button>
                     </span>
                     <span>
-                        <label for='us'>US:</label>
+                        <label for='us'>Ultrasonic:</label>
                         <input type='range' id='us' name='us' min='0.0' max='180.0' step='1.0' />
-                        <button onClick={setServo('us')}>US</button>
+                        <button onClick={setServo('us')}>Send</button>
                     </span>
+                </ServoWrapper>
+                <div>
+                    <ControlHeading>Functions</ControlHeading>
+                    <button onClick={saveImage('')}>Save</button>
+                    <button onClick={button('/test_button1')}>Test1</button>
+                    <button onClick={button('/test_button2')}>Test2</button>
                 </div>
-                <button onClick={saveImage('')}>Save Image</button>
             </Buttons>
         </MainWrapper>
     );
