@@ -6,7 +6,7 @@
 
 
 import time
-from pyimagesearch.motion_detection.singlemotiondetector import SingleMotionDetector
+# from pyimagesearch.motion_detection.singlemotiondetector import SingleMotionDetector
 from flask import Flask
 from flask import Response
 from flask import render_template
