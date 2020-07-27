@@ -262,7 +262,7 @@ def get_clock_time():
 @app.route('/cam1')
 def cam1():
     # return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
-    return Response('not using this anymore')2
+    return Response('not using this anymore')
 
 def appendTime():
     timestamp = datetime.datetime.now()
