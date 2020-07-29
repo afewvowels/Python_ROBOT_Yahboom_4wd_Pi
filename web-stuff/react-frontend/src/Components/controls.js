@@ -147,7 +147,7 @@ export default function Controls() {
             }
             
             videoFeed = document.createElement('img');
-            videoFeed.src = 'http://192.168.86.48:5000/cam1';
+            videoFeed.src = 'http://rbt-charlie:5000/cam1';
             document.getElementById('main-wrapper').appendChild(videoFeed);
         }, 50);
         return () => clearInterval(interval);
