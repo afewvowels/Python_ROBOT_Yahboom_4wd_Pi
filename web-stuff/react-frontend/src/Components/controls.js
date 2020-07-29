@@ -6,9 +6,9 @@ const MainWrapper = styled.main`
     display: grid;
     grid-template:
         'heading heading heading' 3rem
-        'video video messages' auto
-        'video video messages' auto
-        'buttons buttons buttons' auto
+        'video video video' auto
+        'video video video' auto
+        'buttons buttons messages' auto
         / 33.3% 33.3% 33.3%;
     width: auto;
     max-width: 50rem;
@@ -138,20 +138,20 @@ const ServoWrapper = styled.div`
 `;
 
 export default function Controls() {
-    useEffect(() => {
-        const interval = setInterval(() => {
-            var videoFeed = document.getElementsByTagName('img');
+    // useEffect(() => {
+    //     const interval = setInterval(() => {
+    //         var videoFeed = document.getElementsByTagName('img');
             
-            if (videoFeed.length > 0) {
-                videoFeed[0].remove();
-            }
+    //         if (videoFeed.length > 0) {
+    //             videoFeed[0].remove();
+    //         }
             
-            videoFeed = document.createElement('img');
-            videoFeed.src = 'http://rbt-charlie:5000/cam1';
-            document.getElementById('main-wrapper').appendChild(videoFeed);
-        }, 50);
-        return () => clearInterval(interval);
-    }, []);
+    //         videoFeed = document.createElement('img');
+    //         videoFeed.src = 'http://rbt-charlie:5000/cam1';
+    //         document.getElementById('main-wrapper').appendChild(videoFeed);
+    //     }, 50);
+    //     return () => clearInterval(interval);
+    // }, []);
 
     const button = value => () => {
         var msg, good
@@ -265,6 +265,7 @@ export default function Controls() {
     return(
         <MainWrapper id='main-wrapper'>
             <Heading>Controls</Heading>
+            <img src="http://localhost:8080/stream?topic=/cv_camera/image_raw" />
             <MessageFeed id='status-container'>
                 <ControlHeading>Messages</ControlHeading>
                 <FeedBody id='status-feed'></FeedBody>
