@@ -358,8 +358,8 @@ if __name__ == '__main__':
     args = vars(ap.parse_args())
 
     # t = threading.Thread(target=detect_motion, args=(args['frame_count'],))
-    t.daemon = True
-    t.start()
+    # t.daemon = True
+    # t.start()
 
     app.run(host=args['ip'], port=args['port'], debug=True, threaded=True, use_reloader=False)
 
