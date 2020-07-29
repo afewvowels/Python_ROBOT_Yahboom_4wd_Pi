@@ -135,12 +135,8 @@ pwm_RIGHT = GPIO.PWM(rPWM, 2000)
 pwm_LEFT.start(0)
 pwm_RIGHT.start(0)
 
-def setSpeed(fast):
+def setSpeed():
     global speed
-    if fast == True:
-        speed = 50
-    elif fast == False:
-        speed = 25
     pwm_LEFT.ChangeDutyCycle(speed)
     pwm_RIGHT.ChangeDutyCycle(speed)
 
@@ -151,48 +147,48 @@ def stopMotors(duration=0.0):
     GPIO.output(rForward, GPIO.LOW)
     GPIO.output(rBackward, GPIO.LOW)
 
-def moveForward(duration, fast):
-    setSpeed(fast)
+def moveForward(duration):
+    setSpeed()
     GPIO.output(lForward, GPIO.HIGH)
     GPIO.output(lBackward, GPIO.LOW)
     GPIO.output(rForward, GPIO.HIGH)
     GPIO.output(rBackward, GPIO.LOW)
     stopMotors(duration)
 
-def moveLeft(duration, fast):
-    setSpeed(fast)
+def moveLeft(duration):
+    setSpeed()
     GPIO.output(lForward, GPIO.HIGH)
     GPIO.output(lBackward, GPIO.LOW)
     GPIO.output(rForward, GPIO.LOW)
     GPIO.output(rBackward, GPIO.LOW)
     stopMotors(duration)
 
-def moveRight(duration, fast):
-    setSpeed(fast)
+def moveRight(duration):
+    setSpeed()
     GPIO.output(lForward, GPIO.LOW)
     GPIO.output(lBackward, GPIO.LOW)
     GPIO.output(rForward, GPIO.HIGH)
     GPIO.output(rBackward, GPIO.LOW)
     stopMotors(duration)
 
-def turnLeft(duration, fast):
-    setSpeed(fast)
+def turnLeft(duration):
+    setSpeed()
     GPIO.output(lForward, GPIO.HIGH)
     GPIO.output(lBackward, GPIO.LOW)
     GPIO.output(rForward, GPIO.LOW)
     GPIO.output(rBackward, GPIO.HIGH)
     stopMotors(duration)
 
-def turnRight(duration, fast):
-    setSpeed(fast)
+def turnRight(duration):
+    setSpeed()
     GPIO.output(lForward, GPIO.LOW)
     GPIO.output(lBackward, GPIO.HIGH)
     GPIO.output(rForward, GPIO.HIGH)
     GPIO.output(rBackward, GPIO.LOW)
     stopMotors(duration)
 
-def moveBackwards(duration, fast):
-    setSpeed(fast)
+def moveBackwards(duration):
+    setSpeed()
     GPIO.output(lForward, GPIO.LOW)
     GPIO.output(lBackward, GPIO.HIGH)
     GPIO.output(rForward, GPIO.LOW)
@@ -297,6 +293,7 @@ def led_set():
 
 @app.route('/move', methods=['POST'])
 def move():
+    global speed
     try:
         if request.method == 'POST':
             move = request.args['move']
@@ -304,28 +301,23 @@ def move():
             duration = request.args['duration']
             print('duration: ' + duration)
             duration = float(duration)
-            fast = request.args['fast']
-            if int(fast) == 0:
-                fastBool = True
-                print('fast: yes')
-            elif int(fast) == 1:
-                fastBool = False
-                print('fast: no')
+            speed = request.args['speed']
+            print('speed set to: ' + speed)
     except Exception as e:
         return Response('move error occurred')
     
     if move == 'forward':
-        moveForward(duration, fastBool)
+        moveForward(duration)
     elif move == 'left':
-        moveLeft(duration, fastBool)
+        moveLeft(duration)
     elif move == 'right':
-        moveRight(duration, fastBool)
+        moveRight(duration)
     elif move == 'turn_left':
-        turnLeft(duration, fastBool)
+        turnLeft(duration)
     elif move == 'turn_right':
-        turnRight(duration, fastBool)
+        turnRight(duration)
     elif move == 'backward':
-        moveBackwards(duration, fastBool)
+        moveBackwards(duration)
     else:
         print('back move term provided')
 

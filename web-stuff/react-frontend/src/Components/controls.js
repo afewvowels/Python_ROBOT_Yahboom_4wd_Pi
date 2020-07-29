@@ -285,14 +285,22 @@ export default function Controls() {
                         <label for='duration'>Duration of move (1 to 5):</label>
                         <input type='range' id='duration' name='duration' min='1' max='5' list='tickmarks-duration' />
                         <datalist id="tickmarks-duration">
-                            <option value="1" label="1"></option>
-                            <option value="2"></option>
-                            <option value="3" label="3"></option>
-                            <option value="4"></option>
-                            <option value="5" label="5"></option>
+                            <option value="1" label="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3" label="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5" label="5">5</option>
                         </datalist>
-                        <label for='go-fast'>Go Fast!:</label>
-                        <input type='checkbox' id='go-fast' name='go-fast' value='go-fast' />
+                        <label for='speed'>Go Fast!:</label>
+                        <datalist id="tickmarks-speed">
+                            <option value="0">0</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="50">50</option>
+                        </datalist>
+                        <input type='range' id='speed' name='speed' min='0' max='50' increment='5' list='tickmarks-speed' />
                     </MoveModifyWrapper>
                 </MovementWrapper>
                 <LEDWrapper>
