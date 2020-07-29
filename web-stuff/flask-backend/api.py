@@ -301,8 +301,9 @@ def move():
             duration = request.args['duration']
             print('duration: ' + duration)
             duration = float(duration)
-            speed = float(request.args['speed'])
+            speed = request.args['speed']
             print('speed set to: ' + speed)
+            speed = float(speed)
     except Exception as e:
         return Response('move error occurred')
     
