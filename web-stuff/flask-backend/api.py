@@ -36,11 +36,11 @@ lock = threading.Lock()
 app = Flask(__name__)
 
 # intialize video stream
-vs = VideoStream(src=0, usePiCam=False, resolution=(2560, 960)).start()
-vs = cv2.VideoCapture(0)
+# vs = VideoStream(src=0, usePiCam=False, resolution=(2560, 960)).start()
+# vs = cv2.VideoCapture(0)
 # vs.set(cv2.CAP_PROP_FRAME_WIDTH, 2560)
 # vs.set(cv2.CAP_PROP_FRAME_HEIGHT, 960)
-time.sleep(2.0)
+# time.sleep(2.0)
 
 # initialize pin style for gpiozero
 # gpiozero.Device.pin_factory = RPiGPIOFactory()
@@ -212,57 +212,57 @@ def get_current_time():
 def get_clock_time():
     return {'clock_time': time.clock()}
 
-def detect_motion(frameCount):
-    global vs, outputFrame, lock, saveFrame
+# def detect_motion(frameCount):
+#     global vs, outputFrame, lock, saveFrame
 
-    md = SingleMotionDetector(accumWeight=0.1)
-    total = 0
+#     md = SingleMotionDetector(accumWeight=0.1)
+#     total = 0
 
-    while True:
-        ret, frame = vs.read()
-        saveFrame = frame.copy()
-        cropped = frame[0:960, 0:1280]
-        gray = cv2.cvtColor(cropped, cv2.COLOR_BGR2GRAY)
-        gray = cv2.GaussianBlur(gray, (7, 7), 0)
+#     while True:
+#         ret, frame = vs.read()
+#         saveFrame = frame.copy()
+#         cropped = frame[0:960, 0:1280]
+#         gray = cv2.cvtColor(cropped, cv2.COLOR_BGR2GRAY)
+#         gray = cv2.GaussianBlur(gray, (7, 7), 0)
 
-        timestamp = datetime.datetime.now()
-        cv2.putText(frame, timestamp.strftime(
-            '%A %d %B %Y %I:%M:%S%p'),
-            (10, cropped.shape[0] - 10),
-            cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
+#         timestamp = datetime.datetime.now()
+#         cv2.putText(frame, timestamp.strftime(
+#             '%A %d %B %Y %I:%M:%S%p'),
+#             (10, cropped.shape[0] - 10),
+#             cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
 
-        if total > frameCount:
-            motion = md.detect(gray)
+#         if total > frameCount:
+#             motion = md.detect(gray)
 
-            if motion is not None:
-                (thresh, (minX, minY, maxX, maxY)) = motion
-                cv2.rectangle(frame, (minX, minY), (maxX, maxY), (0, 0, 255), 2)
+#             if motion is not None:
+#                 (thresh, (minX, minY, maxX, maxY)) = motion
+#                 cv2.rectangle(frame, (minX, minY), (maxX, maxY), (0, 0, 255), 2)
             
-        md.update(gray)
-        total += 1
+#         md.update(gray)
+#         total += 1
 
-        with lock:
-            outputFrame = cropped.copy()
+#         with lock:
+#             outputFrame = cropped.copy()
 
-def generate():
-    global outputFrame, lock
+# def generate():
+#     global outputFrame, lock
 
-    while True:
-        with lock:
-            if outputFrame is None:
-                continue
+#     while True:
+#         with lock:
+#             if outputFrame is None:
+#                 continue
 
-            (flag, encodedImage) = cv2.imencode('.jpg', outputFrame)
+#             (flag, encodedImage) = cv2.imencode('.jpg', outputFrame)
 
-            if not flag:
-                continue
+#             if not flag:
+#                 continue
             
-        yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + bytearray(encodedImage) + b'\r\n')
+#         yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + bytearray(encodedImage) + b'\r\n')
         
 @app.route('/cam1')
 def cam1():
-    return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
-    # return Response('not using this anymore')
+    # return Response(generate(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    return Response('not using this anymore')
 
 def appendTime():
     timestamp = datetime.datetime.now()
@@ -343,12 +343,12 @@ def rotate_c():
 
 @app.route('/save', methods=['GET'])
 def save():
-    global saveFrame
-    name = '/home/pi/Pictures/Webcam/stereo' + str(random.randrange(0, 10000)) + '.jpg'
-    # (flag, jpg) = cv2.imencode('.jpg', saveFrame)
-    cv2.imwrite(name, saveFrame, [cv2.IMWRITE_JPEG_QUALITY, 95])
-    return Response(str('image saved as: ' + name))
-    # return Response('not using this anymore')
+    # global saveFrame
+    # name = '/home/pi/Pictures/Webcam/stereo' + str(random.randrange(0, 10000)) + '.jpg'
+    # # (flag, jpg) = cv2.imencode('.jpg', saveFrame)
+    # cv2.imwrite(name, saveFrame, [cv2.IMWRITE_JPEG_QUALITY, 95])
+    # return Response(str('image saved as: ' + name))
+    return Response('not using this anymore')
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
@@ -364,4 +364,4 @@ if __name__ == '__main__':
     app.run(host=args['ip'], port=args['port'], debug=True, threaded=True, use_reloader=False)
 
 # vs.stop()
-vs.release()
+# vs.release()
