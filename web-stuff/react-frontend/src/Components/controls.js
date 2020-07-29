@@ -176,14 +176,14 @@ export default function Controls() {
 
     const move = value => () => {
         var move = value;
-        var speed = document.getElementById('go-fast');
+        var speed = document.getElementById('speed').value;
         var duration = document.getElementById('duration').value;
 
-        if (speed.checked) {
-            speed = 0;
-        } else {
-            speed = 1;
-        }
+        // if (speed.checked) {
+        //     speed = 0;
+        // } else {
+        //     speed = 1;
+        // }
 
         console.log('move: ' + move);
         console.log('duration: ' + duration);
@@ -193,7 +193,7 @@ export default function Controls() {
         
         toSend.append('move', move);
         toSend.append('duration', duration);
-        toSend.append('fast', speed);
+        toSend.append('speed', speed);
 
         console.log('/move?' + toSend.toString());
 
