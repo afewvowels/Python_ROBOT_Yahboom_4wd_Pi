@@ -36,7 +36,7 @@ lock = threading.Lock()
 app = Flask(__name__)
 
 # intialize video stream
-vs = VideoStream(src=0, usePiCam=False, resolution=(1280, 480)).start()
+vs = VideoStream(src=0, usePiCam=False, resolution=(2560, 960)).start()
 vs = cv2.VideoCapture(0)
 vs.set(cv2.CAP_PROP_FRAME_WIDTH, 2560)
 vs.set(cv2.CAP_PROP_FRAME_HEIGHT, 960)
