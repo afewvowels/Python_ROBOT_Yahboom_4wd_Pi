@@ -140,22 +140,34 @@ const ServoWrapper = styled.div`
 export default function Controls() {
     useEffect(() => {
         const interval = setInterval(() => {
-            var videoFeed = document.getElementsByTagName('img');
+            var videoFeed = document.getElementById('rbt-feed');
             var cpuText = document.getElementById('cpu-use');
             var memText = document.getElementById('mem-use');
             var netText = document.getElementById('net-use');
             
-            if (videoFeed.length > 0) {
-                videoFeed[0].remove();
-            }
+            // if (videoFeed.length > 0) {
+            //     videoFeed[0].remove();
+            // }
             
-            videoFeed = document.createElement('img');
+            // videoFeed = document.createElement('img');
             videoFeed.src = 'http://localhost:8080/stream?topic=/sxs_stereo/left/image_rect_color';
-            document.getElementById('main-wrapper').appendChild(videoFeed);
+            // document.getElementById('main-wrapper').appendChild(videoFeed);
 
-            cpuText.value = 'http://rbt-charlie:5000/cpu_use';
-            memText.value = 'http://rbt-charlie:5000/mem_use';
-            netText.value = 'http://rbt-charlie:5000/net_use';
+            fetch('/cpu_use')
+                .then(res => res.json())
+                .then(data => {
+                    cpuText.innerHTML = data.msg;
+                });
+            fetch('/mem_use')
+                .then(res => res.json())
+                .then(data => {
+                    memText.innerHTML = data.msg;
+                });
+            fetch('/net_use')
+                .then(res => res.json())
+                .then(data => {
+                    netText.innerHTML = data.msg;
+                });
         }, 50);
         return () => clearInterval(interval);
     }, []);
@@ -273,6 +285,7 @@ export default function Controls() {
         <MainWrapper id='main-wrapper'>
             <Heading>Controls</Heading>
             {/* <img src="http://localhost:8080/stream?topic=/sxs_stereo/left/image_rect_color" /> */}
+            <img src='' id='rbt-feed' />
             <MessageFeed id='status-container'>
                 <ControlHeading>Messages</ControlHeading>
                 <FeedBody id='status-feed'></FeedBody>

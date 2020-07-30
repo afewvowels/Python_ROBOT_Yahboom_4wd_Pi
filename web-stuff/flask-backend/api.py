@@ -270,6 +270,9 @@ def appendTime():
 def returnJSONFormat(inString, good=True):
     return {'msg' : appendTime() + inString, 'good': good}
 
+def returnSimpleJSON(inString):
+    return {'msg': inString)
+
 @app.route('/test_button1')
 def test_button1():
     return json.dumps(returnJSONFormat('button pressed!'))
@@ -337,15 +340,15 @@ def rotate_c():
 
 @app.route('/cpu_use', methods=['GET'])
 def cpu_use():
-    return Response(str(psutil.cpu_percent()))
+    return json.dumps(returnSimpleJSON((psutil.cpu_use())
 
 @app.route('/mem_use', methods=['GET'])
 def mem_use():
-    return Response(str(psutil.virtual_memory().percent))
+    return json.dumps(returnSimpleJSON(psutil.virtual_memory().percent))
 
 @app.route('/net_use', methods=['GET'])
 def net_use():
-    return Response(str(psutil.net_if_stats()['wlan0'].speed))
+    return json.dumps(returnSimpleJSON(psutil.net_if_stats()['wlan0'].speed)))
 
 @app.route('/save', methods=['GET'])
 def save():
