@@ -271,7 +271,7 @@ def returnJSONFormat(inString, good=True):
     return {'msg' : appendTime() + inString, 'good': good}
 
 def returnSimpleJSON(inString):
-    return {'msg': inString)
+    return {'msg': inString}
 
 @app.route('/test_button1')
 def test_button1():
