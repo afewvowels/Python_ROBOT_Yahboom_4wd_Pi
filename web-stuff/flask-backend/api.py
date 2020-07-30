@@ -343,7 +343,7 @@ def cpu_use():
 def mem_use():
     return Response(str(psutil.virtual_memory().percent))
 
-@app.route('/net_use', method=['GET'])
+@app.route('/net_use', methods=['GET'])
 def net_use():
     return Response(str(psutil.net_if_stats()['wlan0'].speed))
 
