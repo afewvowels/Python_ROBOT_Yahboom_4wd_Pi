@@ -340,7 +340,7 @@ def rotate_c():
 
 @app.route('/cpu_use', methods=['GET'])
 def cpu_use():
-    return json.dumps(returnSimpleJSON(psutil.cpu_use()))
+    return json.dumps(returnSimpleJSON(psutil.cpu_percent()))
 
 @app.route('/mem_use', methods=['GET'])
 def mem_use():
