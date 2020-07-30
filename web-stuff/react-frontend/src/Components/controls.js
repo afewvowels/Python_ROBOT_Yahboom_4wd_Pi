@@ -138,20 +138,27 @@ const ServoWrapper = styled.div`
 `;
 
 export default function Controls() {
-    // useEffect(() => {
-    //     const interval = setInterval(() => {
-    //         var videoFeed = document.getElementsByTagName('img');
+    useEffect(() => {
+        const interval = setInterval(() => {
+            var videoFeed = document.getElementsByTagName('img');
+            var cpuText = document.getElementById('cpu-use');
+            var memText = document.getElementById('mem-use');
+            var netText = document.getElementById('net-use');
             
-    //         if (videoFeed.length > 0) {
-    //             videoFeed[0].remove();
-    //         }
+            if (videoFeed.length > 0) {
+                videoFeed[0].remove();
+            }
             
-    //         videoFeed = document.createElement('img');
-    //         videoFeed.src = 'http://rbt-charlie:5000/cam1';
-    //         document.getElementById('main-wrapper').appendChild(videoFeed);
-    //     }, 50);
-    //     return () => clearInterval(interval);
-    // }, []);
+            videoFeed = document.createElement('img');
+            videoFeed.src = 'http://localhost:8080/stream?topic=/sxs_stereo/left/image_rect_color';
+            document.getElementById('main-wrapper').appendChild(videoFeed);
+
+            cpuText.value = 'http://rbt-charlie:5000/cpu_use';
+            memText.value = 'http://rbt-charlie:5000/mem_use';
+            netText.value = 'http://rbt-charlie:5000/net_use';
+        }, 50);
+        return () => clearInterval(interval);
+    }, []);
 
     const button = value => () => {
         var msg, good
@@ -265,10 +272,24 @@ export default function Controls() {
     return(
         <MainWrapper id='main-wrapper'>
             <Heading>Controls</Heading>
-            <img src="http://localhost:8080/stream?topic=/cv_camera/image_raw" />
+            {/* <img src="http://localhost:8080/stream?topic=/sxs_stereo/left/image_rect_color" /> */}
             <MessageFeed id='status-container'>
                 <ControlHeading>Messages</ControlHeading>
                 <FeedBody id='status-feed'></FeedBody>
+                <div>
+                    <div>
+                        <h4>CPU:</h4>
+                        <p id='cpu-use'></p>
+                    </div>
+                    <div>
+                        <h4>Memory:</h4>
+                        <p id='mem-use'></p>
+                    </div>
+                    <div>
+                        <h4>Network:</h4>
+                        <p id='net-use'></p>
+                    </div>
+                </div>
             </MessageFeed>
             <Buttons>
                 <MovementWrapper>
@@ -291,7 +312,9 @@ export default function Controls() {
                             <option value="4">4</option>
                             <option value="5" label="5">5</option>
                         </datalist>
-                        <label for='speed'>Go Fast!:</label>
+                        <label for='speed'>Speed:</label>
+                        <input type='number' id='speed' name='speed' min='20' max='50' />
+                        {/* <label for='speed'>Go Fast!:</label>
                         <datalist id="tickmarks-speed">
                             <option value="0">0</option>
                             <option value="10">10</option>
@@ -300,7 +323,7 @@ export default function Controls() {
                             <option value="40">40</option>
                             <option value="50">50</option>
                         </datalist>
-                        <input type='range' id='speed' name='speed' min='0' max='50' increment='5' list='tickmarks-speed' />
+                        <input type='range' id='speed' name='speed' min='0' max='50' increment='5' list='tickmarks-speed' /> */}
                     </MoveModifyWrapper>
                 </MovementWrapper>
                 <LEDWrapper>

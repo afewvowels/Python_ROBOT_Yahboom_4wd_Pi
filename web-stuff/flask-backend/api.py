@@ -25,6 +25,7 @@ import cv2
 import gpiozero
 from gpiozero.pins.rpigpio import RPiGPIOFactory
 import signal
+import psutil
 
 # initialize output frame & thread lock for
 # multiple browser views
@@ -333,6 +334,18 @@ def rotate_us():
 def rotate_c():
     moveCServo(float(request.args['angle']))
     return Response('moved camera')
+
+@app.route('/cpu_use', methods=['GET'])
+def cpu_use():
+    return Response(str(psutil.cpu_percent()))
+
+@app.route('/mem_use', methods=['GET'])
+def mem_use():
+    return Response(str(psutil.virtual_memory().percent))
+
+@app.route('/net_use', method=['GET'])
+def network():
+    return Response(str(psutil.net_if_stats()['wlan0'].speed))
 
 @app.route('/save', methods=['GET'])
 def save():
