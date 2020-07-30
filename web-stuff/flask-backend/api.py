@@ -348,7 +348,7 @@ def mem_use():
 
 @app.route('/net_use', methods=['GET'])
 def net_use():
-    return json.dumps(returnSimpleJSON(psutil.net_if_stats()['wlan0'].speed)))
+    return json.dumps(returnSimpleJSON(psutil.net_if_stats()['wlan0'].speed))
 
 @app.route('/save', methods=['GET'])
 def save():
