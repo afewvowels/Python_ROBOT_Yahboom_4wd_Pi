@@ -140,7 +140,7 @@ const ServoWrapper = styled.div`
 export default function Controls() {
     useEffect(() => {
         const interval = setInterval(() => {
-            var videoFeed = document.getElementById('rbt-feed');
+            // var videoFeed = document.getElementById('rbt-feed');
             var cpuText = document.getElementById('cpu-use');
             var memText = document.getElementById('mem-use');
             var netText = document.getElementById('net-use');
@@ -150,7 +150,7 @@ export default function Controls() {
             // }
             
             // videoFeed = document.createElement('img');
-            videoFeed.src = 'http://localhost:8080/stream?topic=/sxs_stereo/left/image_rect_color';
+            // videoFeed.src = 'http://localhost:8080/stream?topic=/sxs_stereo/left/image_rect_color';
             // document.getElementById('main-wrapper').appendChild(videoFeed);
 
             fetch('/cpu_use')
@@ -168,7 +168,7 @@ export default function Controls() {
                 .then(data => {
                     netText.innerHTML = data.msg;
                 });
-        }, 50);
+        }, 3000);
         return () => clearInterval(interval);
     }, []);
 
@@ -284,8 +284,8 @@ export default function Controls() {
     return(
         <MainWrapper id='main-wrapper'>
             <Heading>Controls</Heading>
-            {/* <img src="http://localhost:8080/stream?topic=/sxs_stereo/left/image_rect_color" /> */}
-            <img src='' id='rbt-feed' />
+            <img src="http://localhost:8080/stream?topic=/sxs_stereo/left/image_rect_color" />
+            {/* <img src='' id='rbt-feed' /> */}
             <MessageFeed id='status-container'>
                 <ControlHeading>Messages</ControlHeading>
                 <FeedBody id='status-feed'></FeedBody>
