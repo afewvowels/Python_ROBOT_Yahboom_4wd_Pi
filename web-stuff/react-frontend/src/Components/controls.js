@@ -148,7 +148,10 @@ export default function Controls() {
             // var videoFeed = document.getElementById('rbt-feed');
             var cpuText = document.getElementById('cpu-use');
             var memText = document.getElementById('mem-use');
-            var netText = document.getElementById('net-use');
+            var netSentText = document.getElementById('net-use-sent');
+            var netRecvText = document.getElementById('net-use-recv');
+
+            var num = 0.0;
             
             // if (videoFeed.length > 0) {
             //     videoFeed[0].remove();
@@ -168,10 +171,15 @@ export default function Controls() {
                 .then(data => {
                     memText.innerHTML = data.msg;
                 });
-            fetch('/net_use')
+            fetch('/net_use_sent')
                 .then(res => res.json())
                 .then(data => {
-                    netText.innerHTML = data.msg;
+                    netSentText.innerHTML = data.msg;
+                });
+            fetch('/net_use_recv')
+                .then(res => res.json())
+                .then(data => {
+                    netRecvText.innerHTML = data.msg;
                 });
         }, 3000);
         return () => clearInterval(interval);
@@ -296,7 +304,8 @@ export default function Controls() {
     return(
         <MainWrapper id='main-wrapper'>
             <Heading>Controls</Heading>
-            <img src="http://localhost:8080/stream?topic=/sxs_stereo/left/image_rect_color" />
+            <img src="http://rbt-charlie:8080/stream?topic=/sxs_stereo/left/image_rect_color" />
+            {/* <img src="http://localhost:8080/stream?topic=/sxs_stereo/left/image_rect_color" /> */}
             {/* <img src='' id='rbt-feed' /> */}
             <MessageFeed id='status-container'>
                 <ControlHeading>Messages</ControlHeading>
@@ -310,8 +319,12 @@ export default function Controls() {
                         <p id='mem-use'></p>
                     </div>
                     <div>
-                        <h4>Network:</h4>
-                        <p id='net-use'></p>
+                        <h4>Sent:</h4>
+                        <p id='net-use-sent'></p>
+                    </div>
+                    <div>
+                        <h4>Recv:</h4>
+                        <p id='net-use-recv'></p>
                     </div>
                 </RPiStats>
                 <FeedBody id='status-feed'></FeedBody>

@@ -346,9 +346,13 @@ def cpu_use():
 def mem_use():
     return json.dumps(returnSimpleJSON(psutil.virtual_memory().percent))
 
-@app.route('/net_use', methods=['GET'])
-def net_use():
-    return json.dumps(returnSimpleJSON(psutil.net_if_stats()['wlan0'].speed))
+@app.route('/net_use_sent', methods=['GET'])
+def net_use_sent():
+    return json.dumps(returnSimpleJSON(psutil.net_io_counters().bytes_sent))
+
+@app.route('/net_use_recv', methods=['GET'])
+def net_use_recv():
+    return json.dumps(returnSimpleJSON(psutil.net_io_counters().bytes_recv))
 
 @app.route('/save', methods=['GET'])
 def save():
