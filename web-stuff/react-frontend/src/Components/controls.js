@@ -137,6 +137,11 @@ const ServoWrapper = styled.div`
     }
 `;
 
+const RPiStats = styled.div`
+    display: flex;
+    justify-content: space-around;
+`;
+
 export default function Controls() {
     useEffect(() => {
         const interval = setInterval(() => {
@@ -197,6 +202,13 @@ export default function Controls() {
         var move = value;
         var speed = document.getElementById('speed').value;
         var duration = document.getElementById('duration').value;
+
+        if (speed > 0.0 && speed < 50.0) {
+            speed = speed;
+        } else {
+            speed = 0.0;
+            document.getElementById('speed').value = 10.0;
+        }
 
         // if (speed.checked) {
         //     speed = 0;
@@ -288,8 +300,7 @@ export default function Controls() {
             {/* <img src='' id='rbt-feed' /> */}
             <MessageFeed id='status-container'>
                 <ControlHeading>Messages</ControlHeading>
-                <FeedBody id='status-feed'></FeedBody>
-                <div>
+                <RPiStats>
                     <div>
                         <h4>CPU:</h4>
                         <p id='cpu-use'></p>
@@ -302,7 +313,8 @@ export default function Controls() {
                         <h4>Network:</h4>
                         <p id='net-use'></p>
                     </div>
-                </div>
+                </RPiStats>
+                <FeedBody id='status-feed'></FeedBody>
             </MessageFeed>
             <Buttons>
                 <MovementWrapper>
