@@ -174,12 +174,18 @@ export default function Controls() {
             fetch('/net_use_sent')
                 .then(res => res.json())
                 .then(data => {
-                    netSentText.innerHTML = data.msg;
+                    num = parseFloat(data.msg);
+                    num = num / 12500;
+                    // netSentText.innerHTML = num.toFixed(2).toString();
+                    netSentText.innerHTML = 0.0;
                 });
             fetch('/net_use_recv')
                 .then(res => res.json())
                 .then(data => {
-                    netRecvText.innerHTML = data.msg;
+                    num = parseFloat(data.msg);
+                    num = num / 12500;
+                    // netRecvText.innerHTML = num.toFixed(2).toString();
+                    netRecvText.innerHTML = 0.0;
                 });
         }, 3000);
         return () => clearInterval(interval);
@@ -304,7 +310,7 @@ export default function Controls() {
     return(
         <MainWrapper id='main-wrapper'>
             <Heading>Controls</Heading>
-            <img src="http://rbt-charlie:8080/stream?topic=/sxs_stereo/left/image_rect_color" />
+            <img src="http://localhost:8080/stream?topic=/sxs_stereo/left/image_raw" />
             {/* <img src="http://localhost:8080/stream?topic=/sxs_stereo/left/image_rect_color" /> */}
             {/* <img src='' id='rbt-feed' /> */}
             <MessageFeed id='status-container'>
