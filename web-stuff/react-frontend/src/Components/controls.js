@@ -386,13 +386,13 @@ export default function Controls() {
                 <ServoWrapper>
                     <ControlHeading>Servo Controls</ControlHeading>
                     <span>
-                        <label for='camera'>Camera:</label>
-                        <input type='range' id='camera' name='camera' min='0' max='180' step='1' />
+                        <label id='servo-label-camera' for='camera'>Camera:</label>
+                        <input type='range' id='camera' name='camera' min='0' max='180' step='1' onChange={document.getElementById('servo-label-camera').innerHTML = 'Camera: ' + document.getElementById('camera').value} />
                         <button onClick={setServo('camera')}>Send</button>
                     </span>
                     <span>
-                        <label for='us'>Ultrasonic:</label>
-                        <input type='range' id='us' name='us' min='0.0' max='180.0' step='1.0' />
+                        <label id='servo-label-us' for='us'>Ultrasonic:</label>
+                        <input type='range' id='us' name='us' min='0.0' max='180.0' step='1.0' onChange={document.getElementById('servo-label-us').innerHTML = 'Ultrasonic: ' + document.getElementById('us').value} />
                         <button onClick={setServo('us')}>Send</button>
                     </span>
                 </ServoWrapper>

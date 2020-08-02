@@ -87,30 +87,30 @@ sUltrasonic = GPIO.PWM(SERVO_ULTRASONIC, 50)
 sCamera = GPIO.PWM(SERVO_CAMERA, 50)
 
 def moveUSServo(angle):
-    # freq = angle / 18 + 2
-    # GPIO.output(SERVO_ULTRASONIC, True)
-    # sUltrasonic.ChangeDutyCycle(freq)
-    # sleep(1)
-    # GPIO.output(SERVO_ULTRASONIC, False)
-    # sUltrasonic.ChangeDutyCycle(0)
-    pulsewidth = (angle * 11) + 500
-    GPIO.output(SERVO_ULTRASONIC, GPIO.HIGH)
-    time.sleep(pulsewidth/1000000.0)
-    GPIO.output(SERVO_ULTRASONIC, GPIO.LOW)
-    time.sleep(20.0/1000-pulsewidth/1000000.0)
+    freq = angle / 18 + 2
+    GPIO.output(SERVO_ULTRASONIC, True)
+    sUltrasonic.ChangeDutyCycle(freq)
+    sleep(1)
+    GPIO.output(SERVO_ULTRASONIC, False)
+    sUltrasonic.ChangeDutyCycle(0)
+    # pulsewidth = (angle * 11) + 500
+    # GPIO.output(SERVO_ULTRASONIC, GPIO.HIGH)
+    # time.sleep(pulsewidth/1000000.0)
+    # GPIO.output(SERVO_ULTRASONIC, GPIO.LOW)
+    # time.sleep(20.0/1000-pulsewidth/1000000.0)
 
 def moveCServo(angle):
-    # freq = angle / 18 + 2
-    # GPIO.output(SERVO_CAMERA, True)
-    # sCamera.ChangeDutyCycle(freq)
-    # time.sleep(1)
-    # GPIO.output(SERVO_CAMERA, False)
-    # sCamera.ChangeDutyCycle(0)
-    pulsewidth = (angle * 11) + 500
-    GPIO.output(SERVO_CAMERA, GPIO.HIGH)
-    time.sleep(pulsewidth/1000000.0)
-    GPIO.output(SERVO_CAMERA, GPIO.LOW)
-    time.sleep(20.0/1000-pulsewidth/1000000.0)
+    freq = angle / 18 + 2
+    GPIO.output(SERVO_CAMERA, True)
+    sCamera.ChangeDutyCycle(freq)
+    time.sleep(1)
+    GPIO.output(SERVO_CAMERA, False)
+    sCamera.ChangeDutyCycle(0)
+    # pulsewidth = (angle * 11) + 500
+    # GPIO.output(SERVO_CAMERA, GPIO.HIGH)
+    # time.sleep(pulsewidth/1000000.0)
+    # GPIO.output(SERVO_CAMERA, GPIO.LOW)
+    # time.sleep(20.0/1000-pulsewidth/1000000.0)
 
 # initialize motors && motor functions
 speed = 0.0
@@ -138,6 +138,14 @@ pwm_RIGHT.start(0)
 
 def setSpeed():
     global speed
+
+    if speed < 0.0:
+        speed = 0.0
+    elif speed > 50.0:
+        speed = 50.0
+    else:
+        speed = speed
+
     pwm_LEFT.ChangeDutyCycle(speed)
     pwm_RIGHT.ChangeDutyCycle(speed)
 
